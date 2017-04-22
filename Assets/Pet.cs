@@ -72,6 +72,7 @@ public class Pet : BaseEntity
                     animCount = 0;
                     CurrentState = State.IDLE;
                     HungerSatisfied += .5f;
+                    GameManager.SpawnNeedMet(transform.position + Vector3.up * .1f, eatingFruit.sRenderer.sprite);
                     Destroy(eatingFruit.gameObject);
                 }
                 break;

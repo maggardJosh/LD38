@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 9c323ed9531a2184ca7c30bf22277034
-timeCreated: 1492878738
+timeCreated: 1492879329
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -510,12 +510,12 @@ TextureImporter:
       name: pet_spritesheet_30
       rect:
         serializedVersion: 2
-        x: 56
-        y: 20
-        width: 14
-        height: 78
+        x: 85
+        y: 29
+        width: 12
+        height: 12
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0

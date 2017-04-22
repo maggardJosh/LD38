@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
+[RequireComponent(typeof(SpriteRenderer))]
 public class Fruit : BaseEntity
 {
     public bool InTree = true;
@@ -19,10 +20,13 @@ public class Fruit : BaseEntity
     private Vector3 fallStartPos;
     public Pet.PetType PetType = Pet.PetType.BLUE;
 
+    public SpriteRenderer sRenderer;
+
     public bool IsAvailable = false;
 
     void Start()
     {
+        sRenderer = GetComponent<SpriteRenderer>();
         GameManager.AddObject(this, GameManager.Instance.Fruits);
     }
 

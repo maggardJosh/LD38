@@ -29,8 +29,15 @@ public class GameManager : MonoBehaviour
     public float PetEatTime = 1.5f;
     public int PetEatLoop = 5;
 
+    public AnimationCurve NeedMetCurve;
+    public float NeedMetTime = 1.0f;
+    public float NeedMetYDisp = .2f;
+
     public List<Tree> Trees = new List<Tree>();
     public List<Fruit> Fruits = new List<Fruit>();
+
+
+    public GameObject NeedMetNotificationPrefab;
 
     public static void AddObject<T>(T obj, List<T> list)
     {
@@ -42,6 +49,16 @@ public class GameManager : MonoBehaviour
     {
         if (list.Contains(obj))
             list.Remove(obj);
+    }
+
+    public static void SpawnNeedMet(Vector3 pos, Sprite s)
+    {
+        GameObject needMet = Instantiate(Instance.NeedMetNotificationPrefab);
+        needMet.transform.position = pos;
+        NeedMetNotification needMetClass = needMet.GetComponent<NeedMetNotification>();
+        if (needMetClass != null)
+            needMetClass.SetSprite(s);
+        
     }
 
     void Awake()
