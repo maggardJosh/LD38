@@ -68,7 +68,7 @@ public class Tree : BaseEntity
             positioned = true;
             foreach (Fruit fr in GrownFruit)
             {
-                if ((fr.transform.position - fruitObject.transform.position).sqrMagnitude < .001f)
+                if ((fr.transform.position - fruitObject.transform.position).sqrMagnitude < .01f)
                     positioned = false;
             }
             if (positionTry++ > 5)

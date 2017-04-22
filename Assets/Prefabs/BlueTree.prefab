@@ -104,9 +104,9 @@ MonoBehaviour:
   maxFruit: 3
   FruitGrowTime: 2
   FruitDispHorizMin: -0.05
-  FruitDispHorizMax: 0.088
-  FruitDispUpMin: 0.098
-  FruitDispUpMax: 0.228
+  FruitDispHorizMax: 0.08
+  FruitDispUpMin: 0.12
+  FruitDispUpMax: 0.285
   PetType: 0
 --- !u!212 &212627716600378770
 SpriteRenderer:

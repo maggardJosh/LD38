@@ -37,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1072152899664756}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.233, y: 0.278, z: 0}
+  m_LocalPosition: {x: 0.367, y: 0.158, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -105,8 +105,8 @@ MonoBehaviour:
   FruitGrowTime: 2
   FruitDispHorizMin: -0.05
   FruitDispHorizMax: 0.088
-  FruitDispUpMin: 0.098
-  FruitDispUpMax: 0.228
+  FruitDispUpMin: 0.12
+  FruitDispUpMax: 0.285
   PetType: 2
 --- !u!212 &212582226627285672
 SpriteRenderer:
@@ -139,7 +139,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 22
+  m_SortingOrder: 34
   m_Sprite: {fileID: 21300002, guid: 3bf9919c5a5903b439433c1b9b59d10c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

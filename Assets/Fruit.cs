@@ -20,11 +20,14 @@ public class Fruit : BaseEntity
     private Vector3 fallStartPos;
     public Pet.PetType PetType = Pet.PetType.BLUE;
 
+
+
     public SpriteRenderer sRenderer;
 
     public float HungerValue = .2f;
 
     public bool IsAvailable = false;
+    public float DecayTime = 5.0f;
 
     void Start()
     {
@@ -76,6 +79,14 @@ public class Fruit : BaseEntity
                 IsAvailable = true;
                 InTree = false;
                 count = 0;
+            }
+        }
+        if(IsAvailable)
+        {
+            count += Time.deltaTime;
+            if(count > DecayTime)
+            {
+                Destroy(gameObject);
             }
         }
         base.HandleUpdate();
