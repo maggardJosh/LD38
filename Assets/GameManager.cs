@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -38,6 +39,11 @@ public class GameManager : MonoBehaviour
     public int EvolveLoop = 5;
     public Sprite EvolveNotification;
 
+    public Sprite CoinSprite;
+    public int CoinCount = 10;
+    public Text[] CoinText;
+
+
     public List<Tree> Trees = new List<Tree>();
     public List<Fruit> Fruits = new List<Fruit>();
 
@@ -56,14 +62,21 @@ public class GameManager : MonoBehaviour
             list.Remove(obj);
     }
 
+    public void AddCoin()
+    {
+        CoinCount++;
+        foreach (Text t in CoinText)
+            t.text = CoinCount.ToString();
+    }
+
     public static void SpawnNeedMet(Vector3 pos, Sprite s)
     {
         GameObject needMet = Instantiate(Instance.NeedMetNotificationPrefab);
-        needMet.transform.position = pos;
+        needMet.transform.position = pos + Vector3.up * .1f;
         NeedMetNotification needMetClass = needMet.GetComponent<NeedMetNotification>();
         if (needMetClass != null)
             needMetClass.SetSprite(s);
-        
+
     }
 
     void Awake()

@@ -36,7 +36,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1631002146018172}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.213, y: -0.556, z: 0}
+  m_LocalPosition: {x: 0.913, y: -0.587, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -79,12 +79,14 @@ MonoBehaviour:
   HungerSatisfied: 1
   HungerDecay: 0
   MinHungerBeforeEat: 0.7
+  SecondsPerCoin: 5
   MyPetType: 0
   CurrentState: 0
   DecisionTime: 0.1
   MoveChance: 0
   StopMoveChance: 0.3
   speed: 0.2
+  coinCount: 0
   EvolveTime: 10
   eatingFruit: {fileID: 0}
 --- !u!212 &212051654144364404
@@ -118,7 +120,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 105
+  m_SortingOrder: 108
   m_Sprite: {fileID: 21300006, guid: 9c323ed9531a2184ca7c30bf22277034, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

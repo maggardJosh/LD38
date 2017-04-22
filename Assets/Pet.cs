@@ -11,6 +11,8 @@ public class Pet : BaseEntity
     public float HungerDecay = .1f;
     public float MinHungerBeforeEat = .7f;
 
+    public float SecondsPerCoin = 5f;
+
     public enum PetType
     {
         BLUE,
@@ -83,7 +85,7 @@ public class Pet : BaseEntity
                 {                    
                     GameObject newPet = Instantiate(nextEvolutionPrefab);
                     newPet.transform.position = transform.position;
-                    GameManager.SpawnNeedMet(transform.position + Vector3.up * .1f, GameManager.Instance.EvolveNotification);
+                    GameManager.SpawnNeedMet(transform.position, GameManager.Instance.EvolveNotification);
                     Destroy(gameObject);
                 }
                 break;
@@ -94,11 +96,19 @@ public class Pet : BaseEntity
     public float MoveChance = .7f;
     public float StopMoveChance = .5f;
     public float speed = 1.0f;
+    public float coinCount = 0;
     protected override void HandleFixedUpdate()
     {
         HungerSatisfied -= HungerDecay * Time.fixedUnscaledDeltaTime;
         count += Time.fixedUnscaledDeltaTime;
         lifeCount += Time.fixedUnscaledDeltaTime;
+        coinCount += Time.fixedUnscaledDeltaTime;
+        while(coinCount > SecondsPerCoin)
+        {
+            coinCount -= SecondsPerCoin;
+            GameManager.Instance.AddCoin();
+            GameManager.SpawnNeedMet(transform.position, GameManager.Instance.CoinSprite);
+        }
         if (count >= DecisionTime)
         {
             switch (CurrentState)
