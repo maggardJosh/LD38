@@ -75,11 +75,11 @@ MonoBehaviour:
   sprites: []
   nextEvolutionPrefab: {fileID: 1559098286567768, guid: 9f487afdaddc8b04786cfaadfc9c01f3,
     type: 2}
-  FruitPrefab: {fileID: 0}
+  FruitSprite: {fileID: 0}
   HungerSatisfied: 1
   HungerDecay: 0
   MinHungerBeforeEat: 0.7
-  SecondsPerCoin: 5
+  SecondsPerCoin: 30
   MyPetType: 0
   CurrentState: 0
   DecisionTime: 0.1

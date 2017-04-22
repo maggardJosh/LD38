@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     }
 
     public bool DrawDebug = false;
+    public float DebugDrawTime = .3f;
 
     public AnimationCurve PetIdleCurve;
     public float PetIdleTime = 1.5f;
@@ -39,10 +40,18 @@ public class GameManager : MonoBehaviour
     public int EvolveLoop = 5;
     public Sprite EvolveNotification;
 
+    public AnimationCurve DieCurve;
+    public float DieTime = .3f;
+    public int DieLoop = 5;
+    public Sprite DieNotification;
+
     public Sprite CoinSprite;
     public int CoinCount = 10;
     public Text[] CoinText;
 
+
+    public Sprite PositiveNeed;
+    public Sprite NegativeNeed;
 
     public List<Tree> Trees = new List<Tree>();
     public List<Fruit> Fruits = new List<Fruit>();
@@ -68,14 +77,21 @@ public class GameManager : MonoBehaviour
         foreach (Text t in CoinText)
             t.text = CoinCount.ToString();
     }
-
-    public static void SpawnNeedMet(Vector3 pos, Sprite s)
+    
+    public static void SpawnNeedMet(Vector3 pos, Sprite s, bool positive = true)
     {
         GameObject needMet = Instantiate(Instance.NeedMetNotificationPrefab);
         needMet.transform.position = pos + Vector3.up * .1f;
         NeedMetNotification needMetClass = needMet.GetComponent<NeedMetNotification>();
         if (needMetClass != null)
             needMetClass.SetSprite(s);
+
+        needMet = Instantiate(Instance.NeedMetNotificationPrefab);
+        needMet.transform.position = pos + Vector3.up * .1f  + Vector3.left * .07f;
+        needMetClass = needMet.GetComponent<NeedMetNotification>();
+        if (needMetClass != null)
+            needMetClass.SetSprite(positive ? Instance.PositiveNeed : Instance.NegativeNeed);
+
 
     }
 

@@ -5,7 +5,7 @@ public class Pet : BaseEntity
 {
     public Sprite[] sprites;
     public GameObject nextEvolutionPrefab;
-    public GameObject FruitPrefab;
+    public Sprite FruitSprite;
 
     public float HungerSatisfied = 1f;
     public float HungerDecay = .1f;
@@ -32,7 +32,8 @@ public class Pet : BaseEntity
         ATTACKING,
         EATING,
         SLEEPING,
-        EVOLVING
+        EVOLVING,
+        DYING
     }
 
     private SpriteRenderer sRenderer;
@@ -73,8 +74,9 @@ public class Pet : BaseEntity
                 {
                     animCount = 0;
                     CurrentState = State.IDLE;
-                    HungerSatisfied += .5f;
-                    GameManager.SpawnNeedMet(transform.position + Vector3.up * .1f, eatingFruit.sRenderer.sprite);
+                    HungerSatisfied += eatingFruit.HungerValue;
+                    HungerSatisfied = Mathf.Min(1, HungerSatisfied);
+                    GameManager.SpawnNeedMet(transform.position, eatingFruit.sRenderer.sprite);
                     Destroy(eatingFruit.gameObject);
                 }
                 break;
@@ -89,6 +91,15 @@ public class Pet : BaseEntity
                     Destroy(gameObject);
                 }
                 break;
+            case State.DYING:
+                scaleValue = GameManager.Instance.DieCurve.Evaluate(animCount / GameManager.Instance.DieTime);
+                transform.localScale = new Vector3(1 - scaleValue, 1 + scaleValue, 1);
+                if (animCount >= GameManager.Instance.DieTime * GameManager.Instance.DieLoop)
+                {
+                    GameManager.SpawnNeedMet(transform.position, GameManager.Instance.DieNotification, false );
+                    Destroy(gameObject);
+                }
+                break;
         }
         base.HandleUpdate();
     }
@@ -99,7 +110,10 @@ public class Pet : BaseEntity
     public float coinCount = 0;
     protected override void HandleFixedUpdate()
     {
+        if ((int)(HungerSatisfied * 10f) != (int)((HungerSatisfied - HungerDecay * Time.fixedUnscaledDeltaTime) * 10f))
+            GameManager.SpawnNeedMet(transform.position, FruitSprite, false);
         HungerSatisfied -= HungerDecay * Time.fixedUnscaledDeltaTime;
+       
         count += Time.fixedUnscaledDeltaTime;
         lifeCount += Time.fixedUnscaledDeltaTime;
         coinCount += Time.fixedUnscaledDeltaTime;
@@ -114,7 +128,7 @@ public class Pet : BaseEntity
             switch (CurrentState)
             {
                 case State.IDLE:
-                    if (!CheckEvolve() && !CheckHunger())
+                    if (!CheckDeath() && !CheckEvolve() && !CheckHunger())
                         if (Random.Range(0, 1f) <= MoveChance)
                         {
                             CurrentState = State.MOVING;
@@ -148,57 +162,54 @@ public class Pet : BaseEntity
         return false;
     }
 
+    private bool CheckDeath()
+    {
+        if (HungerSatisfied <= 0)
+        {
+            Die();
+            return true;
+        }
+        return false;
+    }
+    private void Die()
+    {
+        if (CurrentState == State.DYING)
+            return;
+        CurrentState = State.DYING;
+        animCount = 0;
+    }
+
     private bool CheckHunger()
     {
         if (HungerSatisfied < MinHungerBeforeEat)
         {
             Fruit closestFruit = null;
             float closestDist = float.MaxValue;
+            Vector3 targetPos = Vector3.zero;
             foreach (Fruit f in GameManager.Instance.Fruits)
             {
-                if (f.PetType == this.MyPetType && f.IsAvailable)
+                if (f.PetType == this.MyPetType && (f.IsAvailable || (f.InTree && f.IsGrown)))
                 {
+                    //Go for the fruit on the ground or the grown fruit on a tree (whichever is closer)
+                    Vector3 pos = new Vector3(f.bCollider.offset.x, f.bCollider.offset.y) + f.transform.position;
+                    if(f.InTree)
+                        pos = new Vector3(f.treeParent.bCollider.offset.x, f.treeParent.bCollider.offset.y) + f.treeParent.transform.position;
                     float distSqr = (transform.position - f.transform.position).sqrMagnitude;
                     if (distSqr < closestDist)
                     {
                         closestFruit = f;
                         closestDist = distSqr;
+                        targetPos = pos;
                     }
 
                 }
             }
             if (closestFruit != null)
             {
-                Vector3 targetPos = new Vector3(closestFruit.bCollider.offset.x, closestFruit.bCollider.offset.y) + closestFruit.transform.position;
                 MoveDir = targetPos - transform.position;
                 MoveDir = MoveDir.normalized * speed;
                 if (GameManager.Instance.DrawDebug)
-                    Debug.DrawLine(transform.position, targetPos, Color.red, 4f);
-                CurrentState = State.MOVING;
-                return true;
-
-            }
-            Tree closestTree = null;
-            foreach (Tree t in GameManager.Instance.Trees)
-            {
-                if (t.PetType == this.MyPetType)
-                {
-                    float distSqr = (transform.position - t.transform.position).sqrMagnitude;
-                    if (distSqr < closestDist)
-                    {
-                        closestTree = t;
-                        closestDist = distSqr;
-                    }
-                }
-            }
-            if (closestTree != null)
-            {
-                Vector3 targetPos = new Vector3(closestTree.bCollider.offset.x, closestTree.bCollider.offset.y) + closestTree.transform.position;
-
-                MoveDir = targetPos - transform.position;
-                MoveDir = MoveDir.normalized * speed;
-                if (GameManager.Instance.DrawDebug)
-                    Debug.DrawLine(transform.position, targetPos, Color.blue, 4f);
+                    Debug.DrawLine(transform.position, targetPos, Color.red, GameManager.Instance.DebugDrawTime);
                 CurrentState = State.MOVING;
                 return true;
             }
@@ -210,7 +221,7 @@ public class Pet : BaseEntity
     public Fruit eatingFruit = null;
     public void TryEat(Fruit f)
     {
-        if (f.PetType == MyPetType && HungerSatisfied <= MinHungerBeforeEat)
+        if (f.PetType == MyPetType && HungerSatisfied <= MinHungerBeforeEat && CurrentState != State.EVOLVING)
         {
             eatingFruit = f;
             f.IsAvailable = false;

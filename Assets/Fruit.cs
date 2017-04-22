@@ -22,6 +22,8 @@ public class Fruit : BaseEntity
 
     public SpriteRenderer sRenderer;
 
+    public float HungerValue = .2f;
+
     public bool IsAvailable = false;
 
     void Start()
@@ -72,6 +74,7 @@ public class Fruit : BaseEntity
             {
                 isFalling = false;
                 IsAvailable = true;
+                InTree = false;
                 count = 0;
             }
         }

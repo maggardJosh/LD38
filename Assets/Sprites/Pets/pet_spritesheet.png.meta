@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 9c323ed9531a2184ca7c30bf22277034
-timeCreated: 1492879329
+timeCreated: 1492896454
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -35,6 +35,9 @@ TextureImporter:
     21300056: pet_spritesheet_28
     21300058: pet_spritesheet_29
     21300060: pet_spritesheet_30
+    21300062: pet_spritesheet_31
+    21300064: pet_spritesheet_32
+    21300066: pet_spritesheet_33
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -172,10 +175,10 @@ TextureImporter:
       name: pet_spritesheet_4
       rect:
         serializedVersion: 2
-        x: 57
+        x: 59
         y: 85
-        width: 12
-        height: 12
+        width: 10
+        height: 10
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -185,12 +188,12 @@ TextureImporter:
       name: pet_spritesheet_5
       rect:
         serializedVersion: 2
-        x: 71
-        y: 85
-        width: 12
-        height: 12
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 74
+        y: 87
+        width: 6
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -252,8 +255,8 @@ TextureImporter:
         serializedVersion: 2
         x: 57
         y: 71
-        width: 12
-        height: 12
+        width: 11
+        height: 10
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -263,12 +266,12 @@ TextureImporter:
       name: pet_spritesheet_11
       rect:
         serializedVersion: 2
-        x: 71
-        y: 71
-        width: 12
-        height: 12
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 73
+        y: 72
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -341,12 +344,12 @@ TextureImporter:
       name: pet_spritesheet_17
       rect:
         serializedVersion: 2
-        x: 71
-        y: 57
-        width: 12
-        height: 12
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 73
+        y: 58
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -419,12 +422,12 @@ TextureImporter:
       name: pet_spritesheet_23
       rect:
         serializedVersion: 2
-        x: 71
-        y: 43
-        width: 12
-        height: 12
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 73
+        y: 44
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -501,8 +504,8 @@ TextureImporter:
         y: 29
         width: 12
         height: 12
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -514,8 +517,47 @@ TextureImporter:
         y: 29
         width: 12
         height: 12
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: pet_spritesheet_31
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 74
+        width: 7
+        height: 5
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: pet_spritesheet_32
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 58
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: pet_spritesheet_33
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 45
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
