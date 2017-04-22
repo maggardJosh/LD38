@@ -6,12 +6,16 @@ using UnityEngine;
 public class BaseEntity : MonoBehaviour
 {
 
-    BoxCollider2D bCollider;
+    public BoxCollider2D bCollider;
     public LayerMask ImpassableLayer;
+    public LayerMask InteractLayer;
+    void Awake()
+    {
+        bCollider = GetComponent<BoxCollider2D>();
+    }
     // Use this for initialization
     void Start()
     {
-        bCollider = GetComponent<BoxCollider2D>();
     }
 
     protected virtual void HandleUpdate()
@@ -27,11 +31,20 @@ public class BaseEntity : MonoBehaviour
         TryMove();
     }
 
+    public virtual void CollideWithEntity(BaseEntity e)
+    {
+
+    }
+
     private void TryMove()
     {
         RaycastHit2D wallHit = Physics2D.Raycast(transform.position, MoveDir, Time.deltaTime, ImpassableLayer);
         if (wallHit.collider != null)
         {
+            BaseEntity e = wallHit.collider.GetComponent<BaseEntity>();
+            if (e != null)
+                e.CollideWithEntity(this);
+
             if (wallHit.normal.x != 0)
                 MoveDir.x *= -1;
             if (wallHit.normal.y != 0)
@@ -40,6 +53,13 @@ public class BaseEntity : MonoBehaviour
         }
         else
         {
+            RaycastHit2D objectHit = Physics2D.Raycast(transform.position, MoveDir, Time.deltaTime, InteractLayer);
+            if (objectHit.collider != null)
+            {
+                BaseEntity e = objectHit.collider.GetComponent<BaseEntity>();
+                if (e != null)
+                    e.CollideWithEntity(this);
+            }
             transform.position = transform.position + MoveDir * Time.deltaTime;
         }
 

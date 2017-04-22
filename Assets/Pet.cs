@@ -5,6 +5,23 @@ public class Pet : BaseEntity
 {
     public Sprite[] sprites;
     public GameObject nextEvolutionPrefab;
+    public GameObject FruitPrefab;
+
+    public float HungerSatisfied = 1f;
+    public float HungerDecay = .1f;
+    public float MinHungerBeforeEat = .7f;
+
+    public enum PetType
+    {
+        BLUE,
+        RED,
+        GREEN,
+        PURPLE,
+        ORANGE
+    }
+
+
+    public PetType MyPetType = PetType.BLUE;
 
     public enum State
     {
@@ -55,18 +72,20 @@ public class Pet : BaseEntity
     public float speed = 1.0f;
     protected override void HandleFixedUpdate()
     {
+        HungerSatisfied -= HungerDecay * Time.fixedUnscaledDeltaTime;
         count += Time.fixedUnscaledDeltaTime;
         if (count >= DecisionTime)
         {
             switch (CurrentState)
             {
                 case State.IDLE:
-                    if (Random.Range(0, 1f) <= MoveChance)
-                    {
-                        CurrentState = State.MOVING;
-                        float angle = Random.Range(0, Mathf.PI * 2f);
-                        MoveDir = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * speed;
-                    }
+                    if (!CheckHunger())
+                        if (Random.Range(0, 1f) <= MoveChance)
+                        {
+                            CurrentState = State.MOVING;
+                            float angle = Random.Range(0, Mathf.PI * 2f);
+                            MoveDir = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * speed;
+                        }
                     break;
                 case State.MOVING:
                     if (Random.Range(0, 1f) <= StopMoveChance)
@@ -80,6 +99,75 @@ public class Pet : BaseEntity
         }
 
         base.HandleFixedUpdate();
+    }
+
+    private bool CheckHunger()
+    {
+        if (HungerSatisfied < MinHungerBeforeEat)
+        {
+            Fruit closestFruit = null;
+            float closestDist = float.MaxValue;
+            foreach (Fruit f in GameManager.Instance.Fruits)
+            {
+                if (f.PetType == this.MyPetType && f.IsAvailable)
+                {
+                    float distSqr = (transform.position - f.transform.position).sqrMagnitude;
+                    if (distSqr < closestDist)
+                    {
+                        closestFruit = f;
+                        closestDist = distSqr;
+                    }
+
+                }
+            }
+            if (closestFruit != null)
+            {
+                Vector3 targetPos = new Vector3(closestFruit.bCollider.offset.x, closestFruit.bCollider.offset.y) + closestFruit.transform.position;
+                MoveDir = targetPos - transform.position;
+                MoveDir = MoveDir.normalized * speed;
+                if (GameManager.Instance.DrawDebug)
+                    Debug.DrawLine(transform.position, targetPos, Color.red, 4f);
+                CurrentState = State.MOVING;
+                return true;
+
+            }
+            Tree closestTree = null;
+            foreach (Tree t in GameManager.Instance.Trees)
+            {
+                if (t.PetType == this.MyPetType)
+                {
+                    float distSqr = (transform.position - t.transform.position).sqrMagnitude;
+                    if (distSqr < closestDist)
+                    {
+                        closestTree = t;
+                        closestDist = distSqr;
+                    }
+                }
+            }
+            if (closestTree != null)
+            {
+                Vector3 targetPos = new Vector3(closestTree.bCollider.offset.x, closestTree.bCollider.offset.y) + closestTree.transform.position;
+
+                MoveDir = targetPos - transform.position;
+                MoveDir = MoveDir.normalized * speed;
+                if (GameManager.Instance.DrawDebug)
+                    Debug.DrawLine(transform.position, targetPos, Color.blue, 4f);
+                CurrentState = State.MOVING;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public void TryEat(Fruit f)
+    {
+        if (f.PetType == MyPetType && HungerSatisfied <= MinHungerBeforeEat)
+        {
+            f.IsAvailable = false;
+            HungerSatisfied += .5f;
+            Destroy(f.gameObject);
+        }
     }
 }
 
