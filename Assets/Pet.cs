@@ -42,6 +42,7 @@ public class Pet : BaseEntity
 
     public State CurrentState = State.IDLE;
 
+    private float lifeCount = 0;
     private float count = 0;
 
     private float animCount = 0;
@@ -61,7 +62,6 @@ public class Pet : BaseEntity
                 transform.localScale = new Vector3(1 + scaleValue, 1 - scaleValue, 1);
                 while (animCount > GameManager.Instance.PetMoveTime * 2f)
                     animCount -= GameManager.Instance.PetMoveTime * 2f;
-
                 break;
             case State.EATING:
                 scaleValue = GameManager.Instance.PetEatCurve.Evaluate(animCount / GameManager.Instance.PetEatTime);
@@ -76,6 +76,17 @@ public class Pet : BaseEntity
                     Destroy(eatingFruit.gameObject);
                 }
                 break;
+            case State.EVOLVING:
+                scaleValue = GameManager.Instance.EvolveCurve.Evaluate(animCount / GameManager.Instance.EvolveTime);
+                transform.localScale = new Vector3(1 + scaleValue, 1 - scaleValue, 1);
+                if (animCount >= GameManager.Instance.EvolveTime * GameManager.Instance.EvolveLoop)
+                {                    
+                    GameObject newPet = Instantiate(nextEvolutionPrefab);
+                    newPet.transform.position = transform.position;
+                    GameManager.SpawnNeedMet(transform.position + Vector3.up * .1f, GameManager.Instance.EvolveNotification);
+                    Destroy(gameObject);
+                }
+                break;
         }
         base.HandleUpdate();
     }
@@ -87,12 +98,13 @@ public class Pet : BaseEntity
     {
         HungerSatisfied -= HungerDecay * Time.fixedUnscaledDeltaTime;
         count += Time.fixedUnscaledDeltaTime;
+        lifeCount += Time.fixedUnscaledDeltaTime;
         if (count >= DecisionTime)
         {
             switch (CurrentState)
             {
                 case State.IDLE:
-                    if (!CheckHunger())
+                    if (!CheckEvolve() && !CheckHunger())
                         if (Random.Range(0, 1f) <= MoveChance)
                         {
                             CurrentState = State.MOVING;
@@ -112,6 +124,18 @@ public class Pet : BaseEntity
         }
 
         base.HandleFixedUpdate();
+    }
+
+    public float EvolveTime = 10f;
+    private bool CheckEvolve()
+    {
+        if(nextEvolutionPrefab != null & lifeCount > EvolveTime)
+        {
+            CurrentState = State.EVOLVING;
+            animCount = 0;
+            return true;    
+        }
+        return false;
     }
 
     private bool CheckHunger()

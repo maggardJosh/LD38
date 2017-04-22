@@ -36,7 +36,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1559098286567768}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.202, y: -0.289, z: 0}
+  m_LocalPosition: {x: -0.098, y: -0.42, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -61,7 +61,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   sprites: []
-  nextEvolutionPrefab: {fileID: 0}
+  nextEvolutionPrefab: {fileID: 1260576768678680, guid: 57e4ab008cb44f44697ae27976f6ab67,
+    type: 2}
   FruitPrefab: {fileID: 1589804227723442, guid: 6c7befefeb07e5a4891cfa0f81da11d8,
     type: 2}
   HungerSatisfied: 1
@@ -73,6 +74,7 @@ MonoBehaviour:
   MoveChance: 0.1
   StopMoveChance: 0.1
   speed: 0.2
+  EvolveTime: 10
   eatingFruit: {fileID: 0}
 --- !u!114 &114686373536968108
 MonoBehaviour:
@@ -117,7 +119,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 78
+  m_SortingOrder: 91
   m_Sprite: {fileID: 21300000, guid: 9c323ed9531a2184ca7c30bf22277034, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

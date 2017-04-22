@@ -33,6 +33,11 @@ public class GameManager : MonoBehaviour
     public float NeedMetTime = 1.0f;
     public float NeedMetYDisp = .2f;
 
+    public AnimationCurve EvolveCurve;
+    public float EvolveTime = .3f;
+    public int EvolveLoop = 5;
+    public Sprite EvolveNotification;
+
     public List<Tree> Trees = new List<Tree>();
     public List<Fruit> Fruits = new List<Fruit>();
 

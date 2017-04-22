@@ -73,7 +73,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   sprites: []
-  nextEvolutionPrefab: {fileID: 0}
+  nextEvolutionPrefab: {fileID: 1062439176855644, guid: ecc7d2ab1a193174b988d08cd88d1b80,
+    type: 2}
   FruitPrefab: {fileID: 0}
   HungerSatisfied: 1
   HungerDecay: 0
@@ -84,6 +85,7 @@ MonoBehaviour:
   MoveChance: 0
   StopMoveChance: 0.3
   speed: 0.2
+  EvolveTime: 10
   eatingFruit: {fileID: 0}
 --- !u!212 &212330373700025374
 SpriteRenderer:
