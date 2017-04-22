@@ -63,6 +63,18 @@ public class Pet : BaseEntity
                     animCount -= GameManager.Instance.PetMoveTime * 2f;
 
                 break;
+            case State.EATING:
+                scaleValue = GameManager.Instance.PetEatCurve.Evaluate(animCount / GameManager.Instance.PetEatTime);
+                transform.localScale = new Vector3(1 + scaleValue, 1 - scaleValue, 1);
+                eatingFruit.transform.localScale = transform.localScale;
+                if (animCount >= GameManager.Instance.PetEatTime * GameManager.Instance.PetEatLoop)
+                {
+                    animCount = 0;
+                    CurrentState = State.IDLE;
+                    HungerSatisfied += .5f;
+                    Destroy(eatingFruit.gameObject);
+                }
+                break;
         }
         base.HandleUpdate();
     }
@@ -160,13 +172,16 @@ public class Pet : BaseEntity
         return false;
     }
 
+    public Fruit eatingFruit = null;
     public void TryEat(Fruit f)
     {
         if (f.PetType == MyPetType && HungerSatisfied <= MinHungerBeforeEat)
         {
+            eatingFruit = f;
             f.IsAvailable = false;
-            HungerSatisfied += .5f;
-            Destroy(f.gameObject);
+            CurrentState = State.EATING;
+            MoveDir = Vector3.zero;
+            animCount = 0;
         }
     }
 }

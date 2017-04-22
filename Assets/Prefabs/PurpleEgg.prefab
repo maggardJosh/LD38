@@ -53,14 +53,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47d61dbcec38de8488d4dc33395380e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bCollider: {fileID: 0}
   ImpassableLayer:
     serializedVersion: 2
     m_Bits: 256
+  InteractLayer:
+    serializedVersion: 2
+    m_Bits: 0
   sprites: []
   nextEvolutionPrefab: {fileID: 0}
   FruitPrefab: {fileID: 0}
   HungerSatisfied: 1
-  HungerDecay: 0.1
+  HungerDecay: 0
   MinHungerBeforeEat: 0.7
   MyPetType: 3
   CurrentState: 0
@@ -68,6 +72,7 @@ MonoBehaviour:
   MoveChance: 0
   StopMoveChance: 0.3
   speed: 0.2
+  eatingFruit: {fileID: 0}
 --- !u!114 &114867614200910774
 MonoBehaviour:
   m_ObjectHideFlags: 1
