@@ -26,7 +26,7 @@ public class StoreUnlockButton : MonoBehaviour, IPointerClickHandler
     
     public void OnPointerClick(PointerEventData eventData)
     {
-        if(GameManager.Instance.CoinCount > GoldCost)
+        if(GameManager.Instance.CoinCount >= GoldCost)
         {
             GameManager.Instance.SubtractGold(GoldCost);
             foreach (GameObject o in itemsToEnable)

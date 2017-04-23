@@ -159,6 +159,7 @@ public class GameManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        SubtractGold(0);
     }
 
     public LayerMask StoreMask;
