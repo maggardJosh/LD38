@@ -77,8 +77,16 @@ MonoBehaviour:
     type: 2}
   FruitSprite: {fileID: 0}
   HungerSatisfied: 1
-  HungerDecay: 0
+  SleepSatisfied: 1
+  EatChance: 0.2
+  SleepChance: 0.2
   MinHungerBeforeEat: 0.7
+  MinTiredBeforeSleep: 0.7
+  WakeUpChance: 0.3
+  EmergencyEatValue: 0.3
+  EmergencySleepValue: 0.3
+  SleepDecay: 0
+  HungerDecay: 0
   SecondsPerCoin: 30
   MyPetType: 0
   CurrentState: 0

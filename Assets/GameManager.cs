@@ -46,6 +46,12 @@ public class GameManager : MonoBehaviour
     public int DieLoop = 5;
     public Sprite DieNotification;
 
+
+    public AnimationCurve SleepCurve;
+    public float SleepTime = .5f;
+    public int SleepLoop = 3;
+    public Sprite SleepNotification;
+
     public Sprite CoinSprite;
     public int CoinCount = 10;
     public Text[] CoinText;
@@ -57,6 +63,8 @@ public class GameManager : MonoBehaviour
     public List<Tree> Trees = new List<Tree>();
     public List<Fruit> Fruits = new List<Fruit>();
     public List<TreeHole> TreeHoles = new List<TreeHole>();
+
+    public BoxCollider2D playArea;
 
 
     public GameObject NeedMetNotificationPrefab;
