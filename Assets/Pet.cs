@@ -125,7 +125,7 @@ public class Pet : BaseEntity
                 if (animCount >= GameManager.Instance.SleepTime * GameManager.Instance.SleepLoop)
                 {
                     animCount -= GameManager.Instance.SleepTime * GameManager.Instance.SleepLoop;
-                    SleepSatisfied += .1f;
+                    SleepSatisfied += .2f;
                     if (SleepSatisfied > 1 || SleepSatisfied > MinTiredBeforeSleep && Random.Range(0f, 1f) < WakeUpChance)
                     {
                         SleepSatisfied = Mathf.Min(1, SleepSatisfied);
@@ -182,13 +182,13 @@ public class Pet : BaseEntity
     public Vector3 moveTarget;
     protected override void HandleFixedUpdate()
     {
-        if ((int)(HungerSatisfied * 10f) != (int)((HungerSatisfied - HungerDecay * Time.fixedDeltaTime) * 10f))
+        if ((int)(HungerSatisfied * 5f) != (int)((HungerSatisfied - HungerDecay * Time.fixedDeltaTime) * 5f))
             GameManager.SpawnNeedMet(transform.position, FruitSprite, false);
         HungerSatisfied -= HungerDecay * Time.fixedDeltaTime;
 
         if (CurrentState != State.SLEEPING)
         {
-            if ((int)(SleepSatisfied * 10f) != (int)((SleepSatisfied - SleepDecay * Time.fixedDeltaTime) * 10f))
+            if ((int)(SleepSatisfied * 5f) != (int)((SleepSatisfied - SleepDecay * Time.fixedDeltaTime) * 5f))
                 GameManager.SpawnNeedMet(transform.position, GameManager.Instance.SleepNotification, false);
             SleepSatisfied -= SleepDecay * Time.fixedDeltaTime;
         }
