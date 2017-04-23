@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour
 
     public List<Tree> Trees = new List<Tree>();
     public List<Fruit> Fruits = new List<Fruit>();
+    public List<TreeHole> TreeHoles = new List<TreeHole>();
 
 
     public GameObject NeedMetNotificationPrefab;
@@ -107,10 +108,35 @@ public class GameManager : MonoBehaviour
     {
         if (instance.CoinCount < goldCost)
             return;
+        Vector3 newPos = Camera.main.ScreenToWorldPoint(new Vector3(pos.x, pos.y, 0));
+        newPos.z = 0;
+        Tree t = prefab.GetComponent<Tree>();
+        if (t != null)
+        {
+            float closestDist = .02f;
+            TreeHole closestHole = null;
+            foreach (TreeHole h in Instance.TreeHoles)
+            {
+                float dist = (h.transform.position - newPos).sqrMagnitude;
+                if (dist < closestDist)
+                {
+                    closestDist = dist;
+                    closestHole = h;
+                }
+            }
+
+            if (closestHole != null && closestHole.currentTree == null)
+            {
+                newPos = closestHole.transform.position - Vector3.up * (.772f - .72f);
+                closestHole.currentTree = t;
+
+            }
+            else
+                return;
+        }
         Instance.SubtractGold(goldCost);
         GameObject newItem = Instantiate(prefab);
-        newItem.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(pos.x, pos.y, 0));
-        newItem.transform.position = new Vector3(newItem.transform.position.x, newItem.transform.position.y, 0);
+        newItem.transform.position = newPos;
         SpawnNeedMet(newItem.transform.position, Instance.CoinSprite, false);
 
 
