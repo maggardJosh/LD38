@@ -13,6 +13,9 @@ public class MusicFadeIn : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        if (aSource.volume < 1)
+            aSource.volume += Time.deltaTime * .03f;
+        else
+            aSource.volume = 1;
 	}
 }
