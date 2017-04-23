@@ -3,15 +3,18 @@
 [RequireComponent(typeof(SpriteRenderer))]
 public class Pet : BaseEntity
 {
-    public PetType MyPetType = PetType.BLUE;
-    public Sprite normalSprite;
-    public Sprite sleepSprite;
+    [Header("Stats")]
+    public State CurrentState = State.IDLE;
 
-    public GameObject nextEvolutionPrefab;
-    public Sprite FruitSprite;
+    public float lifeCount = 0;
 
-    private float HungerSatisfied = 1f;
-    private float SleepSatisfied = 1f;
+    public float HungerSatisfied = 1f;
+    public float SleepSatisfied = 1f;
+
+    [Header("Stats Settings")]
+    public float speed = 1.0f;
+    public float MoveChance = .7f;
+
 
     public float EatChance = .2f;
     public float SleepChance = .2f;
@@ -28,7 +31,17 @@ public class Pet : BaseEntity
     public float HungerDecay = .1f;
 
     public float SecondsPerCoin = 5f;
+    public float EvolveTime = 10f;
 
+    [Header("Settings")]
+    public PetType MyPetType = PetType.BLUE;
+    public Sprite normalSprite;
+    public Sprite sleepSprite;
+
+    public GameObject nextEvolutionPrefab;
+    public Sprite FruitSprite;
+
+    
     public enum PetType
     {
         BLUE,
@@ -57,10 +70,8 @@ public class Pet : BaseEntity
         animCount = Random.Range(0, GameManager.Instance.PetIdleTime);
         sRenderer = GetComponent<SpriteRenderer>();
     }
-
-    public State CurrentState = State.IDLE;
-
-    private float lifeCount = 0;
+    [Header("Misc")]
+   
     private float count = 0;
 
     private float animCount = 0;
@@ -175,11 +186,11 @@ public class Pet : BaseEntity
     }
 
     public float DecisionTime = .3f;
-    public float MoveChance = .7f;
-    public float StopMoveChance = .5f;
-    public float speed = 1.0f;
+    
     public float coinCount = 0;
     public Vector3 moveTarget;
+    private float moveToSleepCount = 0;
+    private const float MAX_MOVE_TO_SLEEP_TIME = 3.0f;
     protected override void HandleFixedUpdate()
     {
         if ((int)(HungerSatisfied * 5f) != (int)((HungerSatisfied - HungerDecay * Time.fixedDeltaTime) * 5f))
@@ -220,24 +231,26 @@ public class Pet : BaseEntity
                         }
                     break;
                 case State.MOVING:
-                    if (Random.Range(0, 1f) <= StopMoveChance ||
-                        ((transform.position + MoveDir) - moveTarget).sqrMagnitude > ((transform.position - MoveDir) - moveTarget).sqrMagnitude)
+                    if (((transform.position + MoveDir) - moveTarget).sqrMagnitude > ((transform.position - MoveDir) - moveTarget).sqrMagnitude)
                     {
                         MoveDir = Vector2.zero;
                         CurrentState = State.IDLE;
                     }
                     break;
                 case State.MOVING_TO_SLEEP:
-
+                    moveToSleepCount += Time.fixedDeltaTime;
                     if (GameManager.Instance.napArea.bounds.Contains(transform.position) &&
-                        (transform.position - moveTarget).sqrMagnitude < .002f)
-                    //((transform.position + MoveDir) - moveTarget).sqrMagnitude > ((transform.position - MoveDir) - moveTarget).sqrMagnitude)
+                        (transform.position - moveTarget).sqrMagnitude < .004f)
                     {
                         CurrentState = State.SLEEPING;
                         MoveDir = Vector2.zero;
                     }
                     else
                     {
+                        if(moveToSleepCount > MAX_MOVE_TO_SLEEP_TIME)
+                        {
+                            RethinkSleep();
+                        }
                         MoveDir = Vector3.RotateTowards(MoveDir, (moveTarget - transform.position).normalized * speed, .5f, 1f);
                     }
                     break;
@@ -263,7 +276,7 @@ public class Pet : BaseEntity
         base.HandleFixedUpdate();
     }
 
-    public float EvolveTime = 10f;
+    
     private bool CheckEvolve()
     {
         if (nextEvolutionPrefab != null & lifeCount > EvolveTime)
@@ -291,29 +304,32 @@ public class Pet : BaseEntity
         CurrentState = State.DYING;
         animCount = 0;
     }
+    private void RethinkSleep()
+    {
+        if (!GameManager.Instance.napArea.bounds.Contains(transform.position))
+        {
+            CurrentState = State.MOVING_TO_SLEEP;
+            moveToSleepCount = 0;
 
+            Bounds napArea = GameManager.Instance.napArea.bounds;
+            Vector2 randomTarget = new Vector2(Random.Range(napArea.center.x - napArea.extents.x, napArea.center.x + napArea.extents.y), Random.Range(napArea.center.y - napArea.extents.y, napArea.center.y + napArea.extents.y));
+            moveTarget = randomTarget;
+            if (GameManager.Instance.DrawDebug)
+                Debug.DrawLine(transform.position, moveTarget, Color.cyan, GameManager.Instance.DebugDrawTime);
+            MoveDir = (randomTarget - new Vector2(transform.position.x, transform.position.y)).normalized * speed;
+        }
+        else
+        {
+            CurrentState = State.SLEEPING;
+            MoveDir = Vector2.zero;
+        }
+    }
     private bool CheckSleep()
     {
         if ((SleepSatisfied < MinTiredBeforeSleep && Random.Range(0, 1f) < SleepChance) || SleepSatisfied < EmergencySleepValue)
         {
-            if (!GameManager.Instance.napArea.bounds.Contains(transform.position))
-            {
-                CurrentState = State.MOVING_TO_SLEEP;
-
-                Bounds napArea = GameManager.Instance.napArea.bounds;
-                Vector2 randomTarget = new Vector2(Random.Range(napArea.center.x - napArea.extents.x, napArea.center.x + napArea.extents.y), Random.Range(napArea.center.y - napArea.extents.y, napArea.center.y + napArea.extents.y));
-                moveTarget = randomTarget;
-                if (GameManager.Instance.DrawDebug)
-                    Debug.DrawLine(transform.position, moveTarget, Color.cyan, GameManager.Instance.DebugDrawTime);
-                MoveDir = (randomTarget - new Vector2(transform.position.x, transform.position.y)).normalized * speed;
-                return true;
-            }
-            else
-            {
-                CurrentState = State.SLEEPING;
-                MoveDir = Vector2.zero;
-                return true;
-            }
+            RethinkSleep();
+            return true;
         }
         return false;
     }

@@ -19,8 +19,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4422114102139602}
-  - component: {fileID: 212868498474787794}
   - component: {fileID: 114675971754952814}
+  - component: {fileID: 212868498474787794}
   - component: {fileID: 114999384283141738}
   m_Layer: 0
   m_Name: Red3
@@ -60,11 +60,8 @@ MonoBehaviour:
   InteractLayer:
     serializedVersion: 2
     m_Bits: 512
-  MyPetType: 1
-  normalSprite: {fileID: 21300030, guid: 9c323ed9531a2184ca7c30bf22277034, type: 3}
-  sleepSprite: {fileID: 21300084, guid: 9c323ed9531a2184ca7c30bf22277034, type: 3}
-  nextEvolutionPrefab: {fileID: 0}
-  FruitSprite: {fileID: 21300034, guid: 9c323ed9531a2184ca7c30bf22277034, type: 3}
+  speed: 0.1
+  MoveChance: 0.06
   EatChance: 0.2
   SleepChance: 0.2
   MinHungerBeforeEat: 0.5
@@ -75,12 +72,17 @@ MonoBehaviour:
   SleepDecay: 0.03
   HungerDecay: 0.04
   SecondsPerCoin: 20
-  DecisionTime: 0.1
-  MoveChance: 0.06
-  StopMoveChance: 0.25
-  speed: 0.1
-  coinCount: 0
   EvolveTime: 10
+  MyPetType: 1
+  normalSprite: {fileID: 21300030, guid: 9c323ed9531a2184ca7c30bf22277034, type: 3}
+  sleepSprite: {fileID: 21300084, guid: 9c323ed9531a2184ca7c30bf22277034, type: 3}
+  nextEvolutionPrefab: {fileID: 0}
+  FruitSprite: {fileID: 21300034, guid: 9c323ed9531a2184ca7c30bf22277034, type: 3}
+  CurrentState: 0
+  DecisionTime: 0.1
+  StopMoveChance: 0.25
+  coinCount: 0
+  moveTarget: {x: 0, y: 0, z: 0}
   eatingFruit: {fileID: 0}
 --- !u!114 &114999384283141738
 MonoBehaviour:

@@ -19,9 +19,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4551800650798096}
+  - component: {fileID: 114594909652823976}
   - component: {fileID: 212051654144364404}
   - component: {fileID: 114301887744175418}
-  - component: {fileID: 114594909652823976}
   m_Layer: 0
   m_Name: GreenEgg
   m_TagString: Untagged
@@ -72,12 +72,8 @@ MonoBehaviour:
   InteractLayer:
     serializedVersion: 2
     m_Bits: 512
-  MyPetType: 2
-  normalSprite: {fileID: 21300046, guid: 9c323ed9531a2184ca7c30bf22277034, type: 3}
-  sleepSprite: {fileID: 0}
-  nextEvolutionPrefab: {fileID: 1559098286567768, guid: a0dd5698b82ef574c8875b1910dfa8ae,
-    type: 2}
-  FruitSprite: {fileID: 0}
+  speed: 0.2
+  MoveChance: 0
   EatChance: 0
   SleepChance: 0
   MinHungerBeforeEat: 0.7
@@ -88,12 +84,18 @@ MonoBehaviour:
   SleepDecay: 0
   HungerDecay: 0
   SecondsPerCoin: 30
-  DecisionTime: 0.1
-  MoveChance: 0
-  StopMoveChance: 0.3
-  speed: 0.2
-  coinCount: 0
   EvolveTime: 10
+  MyPetType: 2
+  normalSprite: {fileID: 21300046, guid: 9c323ed9531a2184ca7c30bf22277034, type: 3}
+  sleepSprite: {fileID: 0}
+  nextEvolutionPrefab: {fileID: 1559098286567768, guid: a0dd5698b82ef574c8875b1910dfa8ae,
+    type: 2}
+  FruitSprite: {fileID: 0}
+  CurrentState: 0
+  DecisionTime: 0.1
+  StopMoveChance: 0.3
+  coinCount: 0
+  moveTarget: {x: 0, y: 0, z: 0}
   eatingFruit: {fileID: 0}
 --- !u!212 &212051654144364404
 SpriteRenderer:

@@ -9,100 +9,111 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1631002146018172}
+  m_RootGameObject: {fileID: 1618789909301418}
   m_IsPrefabParent: 1
---- !u!1 &1631002146018172
+--- !u!1 &1618789909301418
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4551800650798096}
-  - component: {fileID: 114594909652823976}
-  - component: {fileID: 212051654144364404}
-  - component: {fileID: 114301887744175418}
-  m_Layer: 0
-  m_Name: BlueEgg
+  - component: {fileID: 4597669884018236}
+  - component: {fileID: 114770522986230724}
+  - component: {fileID: 212627716600378770}
+  - component: {fileID: 114714142588841662}
+  - component: {fileID: 61674613657844954}
+  m_Layer: 8
+  m_Name: OrangeTree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4551800650798096
+--- !u!4 &4597669884018236
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1631002146018172}
+  m_GameObject: {fileID: 1618789909301418}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.913, y: -0.587, z: 0}
+  m_LocalPosition: {x: -0.36, y: 0.24, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114301887744175418
+--- !u!61 &61674613657844954
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1618789909301418}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.008417636, y: 0.07038438}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 0.36, y: 0.36}
+    newSize: {x: 0.36, y: 0.36}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.08354241, y: 0.13885903}
+  m_EdgeRadius: 0
+--- !u!114 &114714142588841662
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1631002146018172}
+  m_GameObject: {fileID: 1618789909301418}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e3b97d32f4d37dc4ea94dca00940804b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sortOffset: -0.5
---- !u!114 &114594909652823976
+--- !u!114 &114770522986230724
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1631002146018172}
+  m_GameObject: {fileID: 1618789909301418}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47d61dbcec38de8488d4dc33395380e5, type: 3}
+  m_Script: {fileID: 11500000, guid: 1258121fa9ab5b04180bbbd6a5a66edc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   bCollider: {fileID: 0}
   ImpassableLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 0
   InteractLayer:
     serializedVersion: 2
-    m_Bits: 512
-  speed: 0.2
-  MoveChance: 0
-  EatChance: 0.2
-  SleepChance: 0.2
-  MinHungerBeforeEat: 0.7
-  MinTiredBeforeSleep: 0.7
-  WakeUpChance: 0.3
-  EmergencyEatValue: 0.3
-  EmergencySleepValue: 0.3
-  SleepDecay: 0
-  HungerDecay: 0
-  SecondsPerCoin: 30
-  EvolveTime: 10
-  MyPetType: 0
-  normalSprite: {fileID: 21300006, guid: 9c323ed9531a2184ca7c30bf22277034, type: 3}
-  sleepSprite: {fileID: 0}
-  nextEvolutionPrefab: {fileID: 1559098286567768, guid: 9f487afdaddc8b04786cfaadfc9c01f3,
+    m_Bits: 0
+  FruitPrefab: {fileID: 1589804227723442, guid: 3255dd2856f59e44e91b67e294e25713,
     type: 2}
-  FruitSprite: {fileID: 0}
-  CurrentState: 0
-  DecisionTime: 0.1
-  StopMoveChance: 0.3
-  coinCount: 0
-  moveTarget: {x: 0, y: 0, z: 0}
-  eatingFruit: {fileID: 0}
---- !u!212 &212051654144364404
+  GrownFruit: []
+  maxFruit: 3
+  FruitGrowTime: 2
+  FruitDispHorizMin: -0.05
+  FruitDispHorizMax: 0.08
+  FruitDispUpMin: 0.12
+  FruitDispUpMax: 0.285
+  PetType: 4
+--- !u!212 &212627716600378770
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1631002146018172}
+  m_GameObject: {fileID: 1618789909301418}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -110,7 +121,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: c813c8f696a9e0d4b8d3cabadf6601b9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -128,12 +139,12 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 108
-  m_Sprite: {fileID: 21300006, guid: 9c323ed9531a2184ca7c30bf22277034, type: 3}
+  m_SortingOrder: 26
+  m_Sprite: {fileID: 21300004, guid: 3bf9919c5a5903b439433c1b9b59d10c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.12, y: 0.12}
+  m_Size: {x: 0.36, y: 0.36}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0

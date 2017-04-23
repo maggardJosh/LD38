@@ -9,7 +9,9 @@ public class MusicFadeIn : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         aSource = GetComponent<AudioSource>();
-	}
+        aSource.mute = PlayerPrefs.GetInt("MutePref", 0) == 1;
+
+    }
 	
 	// Update is called once per frame
 	void Update () {

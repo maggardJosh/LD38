@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+[ExecuteInEditMode]
 public class StoreButton : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
 
@@ -13,6 +14,7 @@ public class StoreButton : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     public int GoldCost = 1;
     public ScrollRect parentScroll;
     public GameObject dragImage;
+    public Text[] priceTextBoxes;
 
     // Use this for initialization
     void Start()
@@ -23,12 +25,14 @@ public class StoreButton : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     // Update is called once per frame
     void Update()
     {
-
+        if (Application.isPlaying)
+            return;
+        foreach (Text t in priceTextBoxes)
+            t.text = GoldCost.ToString();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-
         parentScroll.SendMessage("OnBeginDrag", eventData);
         dragImage.GetComponent<Image>().sprite = DragSprite;
     }

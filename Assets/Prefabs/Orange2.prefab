@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 212868498474787794}
   - component: {fileID: 114999384283141738}
   m_Layer: 0
-  m_Name: Blue2
+  m_Name: Orange2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -73,15 +73,15 @@ MonoBehaviour:
   HungerDecay: 0.01
   SecondsPerCoin: 20
   EvolveTime: 60
-  MyPetType: 0
-  normalSprite: {fileID: 21300002, guid: 9c323ed9531a2184ca7c30bf22277034, type: 3}
-  sleepSprite: {fileID: 21300070, guid: 9c323ed9531a2184ca7c30bf22277034, type: 3}
-  nextEvolutionPrefab: {fileID: 1260576768678680, guid: 3d91f7cf5084d7a438969a6a28cd1acb,
+  MyPetType: 4
+  normalSprite: {fileID: 21300056, guid: 9c323ed9531a2184ca7c30bf22277034, type: 3}
+  sleepSprite: {fileID: 21300094, guid: 9c323ed9531a2184ca7c30bf22277034, type: 3}
+  nextEvolutionPrefab: {fileID: 1260576768678680, guid: a2b82d951f45bed44991b4d5071fe2ab,
     type: 2}
-  FruitSprite: {fileID: 21300008, guid: 9c323ed9531a2184ca7c30bf22277034, type: 3}
+  FruitSprite: {fileID: 21300062, guid: 9c323ed9531a2184ca7c30bf22277034, type: 3}
   CurrentState: 0
   DecisionTime: 0.1
-  StopMoveChance: 0.1
+  StopMoveChance: 0.2
   coinCount: 0
   moveTarget: {x: 0, y: 0, z: 0}
   eatingFruit: {fileID: 0}
@@ -129,7 +129,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 85
-  m_Sprite: {fileID: 21300002, guid: 9c323ed9531a2184ca7c30bf22277034, type: 3}
+  m_Sprite: {fileID: 21300056, guid: 9c323ed9531a2184ca7c30bf22277034, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

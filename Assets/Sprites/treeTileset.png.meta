@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 3bf9919c5a5903b439433c1b9b59d10c
-timeCreated: 1492925477
+timeCreated: 1492965230
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -8,6 +8,7 @@ TextureImporter:
     21300002: treeTileset_1
     21300004: treeTileset_2
     21300006: treeTileset_3
+    21300008: treeTileset_4
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -119,6 +120,19 @@ TextureImporter:
       name: treeTileset_2
       rect:
         serializedVersion: 2
+        x: 72
+        y: 84
+        width: 36
+        height: 36
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: treeTileset_3
+      rect:
+        serializedVersion: 2
         x: 0
         y: 48
         width: 36
@@ -129,7 +143,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: treeTileset_3
+      name: treeTileset_4
       rect:
         serializedVersion: 2
         x: 36

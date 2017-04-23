@@ -19,10 +19,10 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4597669884018236}
+  - component: {fileID: 114770522986230724}
   - component: {fileID: 212627716600378770}
   - component: {fileID: 114714142588841662}
   - component: {fileID: 61674613657844954}
-  - component: {fileID: 114770522986230724}
   m_Layer: 8
   m_Name: GreenTree
   m_TagString: Untagged
