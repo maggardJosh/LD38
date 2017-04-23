@@ -18,4 +18,10 @@ public class MusicFadeIn : MonoBehaviour {
         else
             aSource.volume = 1;
 	}
+
+    public void SetMute(bool value)
+    {
+        //aSource.mute = true;
+        aSource.mute = value;
+    }
 }

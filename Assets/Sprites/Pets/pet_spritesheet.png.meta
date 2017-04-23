@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 9c323ed9531a2184ca7c30bf22277034
-timeCreated: 1492920139
+timeCreated: 1492964027
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -53,6 +53,7 @@ TextureImporter:
     21300092: pet_spritesheet_46
     21300094: pet_spritesheet_47
     21300096: pet_spritesheet_48
+    21300098: pet_spritesheet_49
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -768,6 +769,19 @@ TextureImporter:
         height: 12
       alignment: 7
       pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: pet_spritesheet_49
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 111
+        width: 10
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
