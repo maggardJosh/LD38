@@ -1,25 +1,25 @@
 fileFormatVersion: 2
-guid: 63dd302525c200543941a0beba832c99
-timeCreated: 1492919583
+guid: b3f73ea35782b34498e5c59e87a730fe
+timeCreated: 1492928812
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: worldTileset_0
-    21300002: worldTileset_1
-    21300004: worldTileset_2
-    21300006: worldTileset_3
-    21300008: worldTileset_4
-    21300010: worldTileset_5
-    21300012: worldTileset_6
-    21300014: worldTileset_7
-    21300016: worldTileset_8
-    21300018: worldTileset_9
-    21300020: worldTileset_10
-    21300022: worldTileset_11
-    21300024: worldTileset_12
-    21300026: worldTileset_13
-    21300028: worldTileset_14
-    21300030: worldTileset_15
+    21300000: worldTileset2_0
+    21300002: worldTileset2_1
+    21300004: worldTileset2_2
+    21300006: worldTileset2_3
+    21300008: worldTileset2_4
+    21300010: worldTileset2_5
+    21300012: worldTileset2_6
+    21300014: worldTileset2_7
+    21300016: worldTileset2_8
+    21300018: worldTileset2_9
+    21300020: worldTileset2_10
+    21300022: worldTileset2_11
+    21300024: worldTileset2_12
+    21300026: worldTileset2_13
+    21300028: worldTileset2_14
+    21300030: worldTileset2_15
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -102,11 +102,11 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: worldTileset_0
+      name: worldTileset2_0
       rect:
         serializedVersion: 2
         x: 1
-        y: 39
+        y: 115
         width: 12
         height: 36
       alignment: 0
@@ -115,11 +115,11 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: worldTileset_1
+      name: worldTileset2_1
       rect:
         serializedVersion: 2
         x: 15
-        y: 39
+        y: 115
         width: 12
         height: 36
       alignment: 0
@@ -128,11 +128,11 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: worldTileset_2
+      name: worldTileset2_2
       rect:
         serializedVersion: 2
         x: 29
-        y: 39
+        y: 115
         width: 12
         height: 36
       alignment: 0
@@ -141,11 +141,11 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: worldTileset_3
+      name: worldTileset2_3
       rect:
         serializedVersion: 2
         x: 43
-        y: 39
+        y: 115
         width: 12
         height: 36
       alignment: 0
@@ -154,11 +154,11 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: worldTileset_4
+      name: worldTileset2_4
       rect:
         serializedVersion: 2
         x: 57
-        y: 39
+        y: 115
         width: 12
         height: 36
       alignment: 0
@@ -167,11 +167,11 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: worldTileset_5
+      name: worldTileset2_5
       rect:
         serializedVersion: 2
         x: 71
-        y: 39
+        y: 115
         width: 12
         height: 36
       alignment: 0
@@ -180,11 +180,11 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: worldTileset_6
+      name: worldTileset2_6
       rect:
         serializedVersion: 2
         x: 85
-        y: 39
+        y: 115
         width: 12
         height: 36
       alignment: 0
@@ -193,11 +193,11 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: worldTileset_7
+      name: worldTileset2_7
       rect:
         serializedVersion: 2
         x: 99
-        y: 39
+        y: 115
         width: 12
         height: 36
       alignment: 0
@@ -206,11 +206,11 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: worldTileset_8
+      name: worldTileset2_8
       rect:
         serializedVersion: 2
         x: 1
-        y: 2
+        y: 78
         width: 12
         height: 36
       alignment: 0
@@ -219,11 +219,11 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: worldTileset_9
+      name: worldTileset2_9
       rect:
         serializedVersion: 2
         x: 15
-        y: 2
+        y: 78
         width: 12
         height: 36
       alignment: 0
@@ -232,11 +232,11 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: worldTileset_10
+      name: worldTileset2_10
       rect:
         serializedVersion: 2
         x: 29
-        y: 2
+        y: 78
         width: 12
         height: 36
       alignment: 0
@@ -245,11 +245,11 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: worldTileset_11
+      name: worldTileset2_11
       rect:
         serializedVersion: 2
         x: 43
-        y: 2
+        y: 78
         width: 12
         height: 36
       alignment: 0
@@ -258,11 +258,11 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: worldTileset_12
+      name: worldTileset2_12
       rect:
         serializedVersion: 2
         x: 57
-        y: 2
+        y: 78
         width: 12
         height: 36
       alignment: 0
@@ -271,11 +271,11 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: worldTileset_13
+      name: worldTileset2_13
       rect:
         serializedVersion: 2
         x: 71
-        y: 2
+        y: 78
         width: 12
         height: 36
       alignment: 0
@@ -284,11 +284,11 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: worldTileset_14
+      name: worldTileset2_14
       rect:
         serializedVersion: 2
         x: 85
-        y: 2
+        y: 78
         width: 12
         height: 36
       alignment: 0
@@ -297,11 +297,11 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: worldTileset_15
+      name: worldTileset2_15
       rect:
         serializedVersion: 2
         x: 99
-        y: 2
+        y: 78
         width: 12
         height: 36
       alignment: 0

@@ -3,20 +3,22 @@
 [RequireComponent(typeof(SpriteRenderer))]
 public class Pet : BaseEntity
 {
+    public PetType MyPetType = PetType.BLUE;
     public Sprite normalSprite;
     public Sprite sleepSprite;
 
     public GameObject nextEvolutionPrefab;
     public Sprite FruitSprite;
 
-    public float HungerSatisfied = 1f;
-    public float SleepSatisfied = 1f;
+    private float HungerSatisfied = 1f;
+    private float SleepSatisfied = 1f;
 
     public float EatChance = .2f;
     public float SleepChance = .2f;
 
     public float MinHungerBeforeEat = .7f;
     public float MinTiredBeforeSleep = .7f;
+
     public float WakeUpChance = .3f;
 
     public float EmergencyEatValue = .3f;
@@ -36,9 +38,6 @@ public class Pet : BaseEntity
         ORANGE
     }
 
-
-    public PetType MyPetType = PetType.BLUE;
-
     public enum State
     {
         IDLE,
@@ -47,7 +46,9 @@ public class Pet : BaseEntity
         EATING,
         SLEEPING,
         EVOLVING,
-        DYING
+        DYING,
+        MOVING_TO_SLEEP,
+        MOVING_TO_FOOD
     }
 
     private SpriteRenderer sRenderer;
@@ -76,6 +77,8 @@ public class Pet : BaseEntity
                     animCount -= GameManager.Instance.PetIdleTime * 2f;
                 break;
             case State.MOVING:
+            case State.MOVING_TO_FOOD:
+            case State.MOVING_TO_SLEEP:
                 scaleValue = GameManager.Instance.PetMoveCurve.Evaluate(animCount / GameManager.Instance.PetMoveTime);
                 transform.localScale = new Vector3(1 + scaleValue, 1 - scaleValue, 1);
                 while (animCount > GameManager.Instance.PetMoveTime * 2f)
@@ -134,11 +137,49 @@ public class Pet : BaseEntity
         }
         base.HandleUpdate();
     }
+
+    public bool RethinkFruit()
+    {
+        Fruit closestFruit = null;
+        float closestDist = float.MaxValue;
+        Vector3 targetPos = Vector3.zero;
+        foreach (Fruit f in GameManager.Instance.Fruits)
+        {
+            if (f.PetType == this.MyPetType && (f.IsAvailable || (f.InTree && f.IsGrown)))
+            {
+                //Go for the fruit on the ground or the grown fruit on a tree (whichever is closer)
+                Vector3 pos = new Vector3(f.bCollider.offset.x, f.bCollider.offset.y) + f.transform.position;
+                if (f.InTree)
+                    pos = new Vector3(f.treeParent.bCollider.offset.x, f.treeParent.bCollider.offset.y) + f.treeParent.transform.position;
+                float distSqr = (transform.position - f.transform.position).sqrMagnitude;
+                if (distSqr < closestDist)
+                {
+                    closestFruit = f;
+                    closestDist = distSqr;
+                    targetPos = pos;
+                }
+
+            }
+        }
+        if (closestFruit != null)
+        {
+            MoveDir = targetPos - transform.position;
+            MoveDir = MoveDir.normalized * speed;
+            if (GameManager.Instance.DrawDebug)
+                Debug.DrawLine(transform.position, targetPos, Color.red, GameManager.Instance.DebugDrawTime);
+            CurrentState = State.MOVING_TO_FOOD;
+            eatingFruit = closestFruit;
+            return true;
+        }
+        return false;
+    }
+
     public float DecisionTime = .3f;
     public float MoveChance = .7f;
     public float StopMoveChance = .5f;
     public float speed = 1.0f;
     public float coinCount = 0;
+    public Vector3 moveTarget;
     protected override void HandleFixedUpdate()
     {
         if ((int)(HungerSatisfied * 10f) != (int)((HungerSatisfied - HungerDecay * Time.fixedDeltaTime) * 10f))
@@ -172,18 +213,48 @@ public class Pet : BaseEntity
                             CurrentState = State.MOVING;
                             Bounds playArea = GameManager.Instance.playArea.bounds;
                             Vector2 randomTarget = new Vector2(Random.Range(playArea.center.x - playArea.extents.x, playArea.center.x + playArea.extents.y), Random.Range(playArea.center.y - playArea.extents.y, playArea.center.y + playArea.extents.y));
-
+                            moveTarget = randomTarget;
                             MoveDir = (randomTarget - new Vector2(transform.position.x, transform.position.y)).normalized * speed;
                             if (GameManager.Instance.DrawDebug)
                                 Debug.DrawLine(transform.position, randomTarget, Color.blue, GameManager.Instance.DebugDrawTime);
                         }
                     break;
                 case State.MOVING:
-                    if (Random.Range(0, 1f) <= StopMoveChance)
+                    if (Random.Range(0, 1f) <= StopMoveChance ||
+                        ((transform.position + MoveDir) - moveTarget).sqrMagnitude > ((transform.position - MoveDir) - moveTarget).sqrMagnitude)
                     {
                         MoveDir = Vector2.zero;
                         CurrentState = State.IDLE;
                     }
+                    break;
+                case State.MOVING_TO_SLEEP:
+
+                    if (GameManager.Instance.napArea.bounds.Contains(transform.position) &&
+                        (transform.position - moveTarget).sqrMagnitude < .002f)
+                    //((transform.position + MoveDir) - moveTarget).sqrMagnitude > ((transform.position - MoveDir) - moveTarget).sqrMagnitude)
+                    {
+                        CurrentState = State.SLEEPING;
+                        MoveDir = Vector2.zero;
+                    }
+                    else
+                    {
+                        MoveDir = Vector3.RotateTowards(MoveDir, (moveTarget - transform.position).normalized * speed, .5f, 1f);
+                    }
+                    break;
+                case State.MOVING_TO_FOOD:
+                    if (eatingFruit == null)
+                        CurrentState = State.IDLE;
+                    else
+                    if (eatingFruit.IsAvailable)
+                    {
+                        MoveDir = Vector3.RotateTowards(MoveDir, (new Vector3(eatingFruit.bCollider.offset.x, eatingFruit.bCollider.offset.y) + eatingFruit.transform.position - transform.position).normalized * speed, .5f, 1f);
+                    }
+                    else if (eatingFruit.InTree)
+                    {
+                        MoveDir = Vector3.RotateTowards(MoveDir, (new Vector3(eatingFruit.treeParent.bCollider.offset.x, eatingFruit.treeParent.bCollider.offset.y) + eatingFruit.treeParent.transform.position -transform.position).normalized * speed, .5f, 1f);
+                    }
+                    else
+                        RethinkFruit();
                     break;
             }
             count = 0;
@@ -225,10 +296,16 @@ public class Pet : BaseEntity
     {
         if ((SleepSatisfied < MinTiredBeforeSleep && Random.Range(0, 1f) < SleepChance) || SleepSatisfied < EmergencySleepValue)
         {
-            if (!GameManager.Instance.playArea.bounds.Contains(transform.position))
+            if (!GameManager.Instance.napArea.bounds.Contains(transform.position))
             {
-                CurrentState = State.MOVING;
-                MoveDir = Vector2.down * speed;
+                CurrentState = State.MOVING_TO_SLEEP;
+
+                Bounds napArea = GameManager.Instance.napArea.bounds;
+                Vector2 randomTarget = new Vector2(Random.Range(napArea.center.x - napArea.extents.x, napArea.center.x + napArea.extents.y), Random.Range(napArea.center.y - napArea.extents.y, napArea.center.y + napArea.extents.y));
+                moveTarget = randomTarget;
+                if (GameManager.Instance.DrawDebug)
+                    Debug.DrawLine(transform.position, moveTarget, Color.cyan, GameManager.Instance.DebugDrawTime);
+                MoveDir = (randomTarget - new Vector2(transform.position.x, transform.position.y)).normalized * speed;
                 return true;
             }
             else
@@ -245,36 +322,7 @@ public class Pet : BaseEntity
     {
         if ((HungerSatisfied < MinHungerBeforeEat && Random.Range(0, 1f) < EatChance) || HungerSatisfied < EmergencyEatValue)
         {
-            Fruit closestFruit = null;
-            float closestDist = float.MaxValue;
-            Vector3 targetPos = Vector3.zero;
-            foreach (Fruit f in GameManager.Instance.Fruits)
-            {
-                if (f.PetType == this.MyPetType && (f.IsAvailable || (f.InTree && f.IsGrown)))
-                {
-                    //Go for the fruit on the ground or the grown fruit on a tree (whichever is closer)
-                    Vector3 pos = new Vector3(f.bCollider.offset.x, f.bCollider.offset.y) + f.transform.position;
-                    if (f.InTree)
-                        pos = new Vector3(f.treeParent.bCollider.offset.x, f.treeParent.bCollider.offset.y) + f.treeParent.transform.position;
-                    float distSqr = (transform.position - f.transform.position).sqrMagnitude;
-                    if (distSqr < closestDist)
-                    {
-                        closestFruit = f;
-                        closestDist = distSqr;
-                        targetPos = pos;
-                    }
-
-                }
-            }
-            if (closestFruit != null)
-            {
-                MoveDir = targetPos - transform.position;
-                MoveDir = MoveDir.normalized * speed;
-                if (GameManager.Instance.DrawDebug)
-                    Debug.DrawLine(transform.position, targetPos, Color.red, GameManager.Instance.DebugDrawTime);
-                CurrentState = State.MOVING;
-                return true;
-            }
+            RethinkFruit();
         }
 
         return false;

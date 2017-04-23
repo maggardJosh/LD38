@@ -65,6 +65,7 @@ public class GameManager : MonoBehaviour
     public List<TreeHole> TreeHoles = new List<TreeHole>();
 
     public BoxCollider2D playArea;
+    public BoxCollider2D napArea;
 
 
     public GameObject NeedMetNotificationPrefab;

@@ -9,19 +9,19 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1062439176855644}
+  m_RootGameObject: {fileID: 1559098286567768}
   m_IsPrefabParent: 1
---- !u!1 &1062439176855644
+--- !u!1 &1559098286567768
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4906533372165558}
-  - component: {fileID: 212784284528819252}
-  - component: {fileID: 114374635440276288}
-  - component: {fileID: 114196713497266576}
+  - component: {fileID: 4460488736893222}
+  - component: {fileID: 212671049432181308}
+  - component: {fileID: 114686373536968108}
+  - component: {fileID: 114437890524706668}
   m_Layer: 0
   m_Name: Green1
   m_TagString: Untagged
@@ -29,25 +29,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4906533372165558
+--- !u!4 &4460488736893222
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1062439176855644}
+  m_GameObject: {fileID: 1559098286567768}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.367, y: -0.365, z: 0}
+  m_LocalPosition: {x: -0.098, y: -0.42, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114196713497266576
+--- !u!114 &114437890524706668
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1062439176855644}
+  m_GameObject: {fileID: 1559098286567768}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 47d61dbcec38de8488d4dc33395380e5, type: 3}
@@ -60,41 +60,47 @@ MonoBehaviour:
   InteractLayer:
     serializedVersion: 2
     m_Bits: 512
-  sprites: []
-  nextEvolutionPrefab: {fileID: 1781190385345376, guid: c40e26f0bea220c42bf4d962cfa12687,
-    type: 2}
-  FruitSprite: {fileID: 21300044, guid: 9c323ed9531a2184ca7c30bf22277034, type: 3}
-  HungerSatisfied: 1
-  HungerDecay: 0.03
-  MinHungerBeforeEat: 0.7
-  SecondsPerCoin: 5
   MyPetType: 2
-  CurrentState: 0
+  normalSprite: {fileID: 21300040, guid: 9c323ed9531a2184ca7c30bf22277034, type: 3}
+  sleepSprite: {fileID: 21300086, guid: 9c323ed9531a2184ca7c30bf22277034, type: 3}
+  nextEvolutionPrefab: {fileID: 1260576768678680, guid: 21a42eb205b2895458566889992df2b9,
+    type: 2}
+  FruitSprite: {fileID: 21300048, guid: 9c323ed9531a2184ca7c30bf22277034, type: 3}
+  EatChance: 0.2
+  SleepChance: 0.2
+  MinHungerBeforeEat: 0.5
+  MinTiredBeforeSleep: 0.7
+  WakeUpChance: 0.3
+  EmergencyEatValue: 0.3
+  EmergencySleepValue: 0.3
+  SleepDecay: 0.03
+  HungerDecay: 0.005
+  SecondsPerCoin: 30
   DecisionTime: 0.1
   MoveChance: 0.1
   StopMoveChance: 0.1
-  speed: 0.2
+  speed: 0.3
   coinCount: 0
-  EvolveTime: 10
+  EvolveTime: 60
   eatingFruit: {fileID: 0}
---- !u!114 &114374635440276288
+--- !u!114 &114686373536968108
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1062439176855644}
+  m_GameObject: {fileID: 1559098286567768}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e3b97d32f4d37dc4ea94dca00940804b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sortOffset: -0.5
---- !u!212 &212784284528819252
+--- !u!212 &212671049432181308
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1062439176855644}
+  m_GameObject: {fileID: 1559098286567768}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -120,12 +126,12 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 86
-  m_Sprite: {fileID: 21300036, guid: 9c323ed9531a2184ca7c30bf22277034, type: 3}
+  m_SortingOrder: 91
+  m_Sprite: {fileID: 21300040, guid: 9c323ed9531a2184ca7c30bf22277034, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.12, y: 0.12}
+  m_Size: {x: 0.1, y: 0.1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0

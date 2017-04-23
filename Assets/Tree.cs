@@ -18,7 +18,7 @@ public class Tree : BaseEntity
     public Pet.PetType PetType = Pet.PetType.BLUE;
 
     void Start()
-    { 
+    {
         GameManager.AddObject(this, GameManager.Instance.Trees);
     }
 
@@ -34,7 +34,15 @@ public class Tree : BaseEntity
             }
         }
         if (fallingFruit != null)
+        {
             fallingFruit.Fall(FruitDispUpMax);
+            if (e is Pet)
+            {
+                if (((Pet)e).eatingFruit != null)
+                    if (((Pet)e).eatingFruit.treeParent == this && ((Pet)e).CurrentState == Pet.State.MOVING_TO_FOOD)
+                        ((Pet)e).eatingFruit = fallingFruit;    //They knocked down a different fruit than they expected... Help them out
+            }
+        }
         base.CollideWithEntity(e);
     }
 

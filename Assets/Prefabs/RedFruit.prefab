@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114381182956906102}
   - component: {fileID: 114451195338491024}
   m_Layer: 9
-  m_Name: GreenFruit
+  m_Name: RedFruit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -141,7 +141,7 @@ MonoBehaviour:
   FallTime: 0.3
   isFalling: 0
   yDisp: 0
-  PetType: 2
+  PetType: 1
   sRenderer: {fileID: 0}
   HungerValue: 0.5
   IsAvailable: 0
@@ -190,7 +190,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 54
-  m_Sprite: {fileID: 21300048, guid: 9c323ed9531a2184ca7c30bf22277034, type: 3}
+  m_Sprite: {fileID: 21300034, guid: 9c323ed9531a2184ca7c30bf22277034, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
