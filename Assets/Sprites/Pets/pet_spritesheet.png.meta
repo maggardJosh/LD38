@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 9c323ed9531a2184ca7c30bf22277034
-timeCreated: 1492896454
+timeCreated: 1492902601
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -162,10 +162,10 @@ TextureImporter:
       name: pet_spritesheet_3
       rect:
         serializedVersion: 2
-        x: 43
+        x: 46
         y: 85
-        width: 12
-        height: 12
+        width: 8
+        height: 9
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -240,10 +240,10 @@ TextureImporter:
       name: pet_spritesheet_9
       rect:
         serializedVersion: 2
-        x: 43
+        x: 46
         y: 71
-        width: 12
-        height: 12
+        width: 8
+        height: 9
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -318,10 +318,10 @@ TextureImporter:
       name: pet_spritesheet_15
       rect:
         serializedVersion: 2
-        x: 43
+        x: 46
         y: 57
-        width: 12
-        height: 12
+        width: 8
+        height: 9
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -396,10 +396,10 @@ TextureImporter:
       name: pet_spritesheet_21
       rect:
         serializedVersion: 2
-        x: 43
+        x: 46
         y: 43
-        width: 12
-        height: 12
+        width: 8
+        height: 9
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -474,10 +474,10 @@ TextureImporter:
       name: pet_spritesheet_27
       rect:
         serializedVersion: 2
-        x: 43
+        x: 46
         y: 29
-        width: 12
-        height: 12
+        width: 8
+        height: 9
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

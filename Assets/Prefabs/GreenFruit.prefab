@@ -142,7 +142,10 @@ MonoBehaviour:
   isFalling: 0
   yDisp: 0
   PetType: 2
+  sRenderer: {fileID: 0}
+  HungerValue: 0.2
   IsAvailable: 0
+  DecayTime: 5
 --- !u!114 &114451195338491024
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -154,7 +157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3b97d32f4d37dc4ea94dca00940804b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sortOffset: -0.8
+  sortOffset: -0.5
 --- !u!212 &212991407946956544
 SpriteRenderer:
   m_ObjectHideFlags: 1

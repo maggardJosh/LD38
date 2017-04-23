@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -77,7 +78,14 @@ public class GameManager : MonoBehaviour
         foreach (Text t in CoinText)
             t.text = CoinCount.ToString();
     }
-    
+
+    public void SubtractGold(int amount)
+    {
+        CoinCount -= amount;
+        foreach (Text t in CoinText)
+            t.text = CoinCount.ToString();
+    }
+
     public static void SpawnNeedMet(Vector3 pos, Sprite s, bool positive = true)
     {
         GameObject needMet = Instantiate(Instance.NeedMetNotificationPrefab);
@@ -87,7 +95,7 @@ public class GameManager : MonoBehaviour
             needMetClass.SetSprite(s);
 
         needMet = Instantiate(Instance.NeedMetNotificationPrefab);
-        needMet.transform.position = pos + Vector3.up * .1f  + Vector3.left * .07f;
+        needMet.transform.position = pos + Vector3.up * .1f + Vector3.left * .07f;
         needMetClass = needMet.GetComponent<NeedMetNotification>();
         if (needMetClass != null)
             needMetClass.SetSprite(positive ? Instance.PositiveNeed : Instance.NegativeNeed);
@@ -95,18 +103,32 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public static void TrySpawnItem(GameObject prefab, int goldCost, Vector2 pos)
+    {
+        if (instance.CoinCount < goldCost)
+            return;
+        Instance.SubtractGold(goldCost);
+        GameObject newItem = Instantiate(prefab);
+        newItem.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(pos.x, pos.y, 0));
+        newItem.transform.position = new Vector3(newItem.transform.position.x, newItem.transform.position.y, 0);
+        SpawnNeedMet(newItem.transform.position, Instance.CoinSprite, false);
+
+
+    }
+
     void Awake()
     {
         instance = this;
+
     }
     // Use this for initialization
     void Start()
     {
     }
 
+    public LayerMask StoreMask;
     // Update is called once per frame
     void Update()
     {
-
     }
 }

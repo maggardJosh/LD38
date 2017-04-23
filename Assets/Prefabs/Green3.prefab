@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114664519205642992}
   - component: {fileID: 114800138980124570}
   m_Layer: 0
-  m_Name: Green2
+  m_Name: Green3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -73,8 +73,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   sprites: []
-  nextEvolutionPrefab: {fileID: 1781190385345376, guid: 79841acdfb2c4684298fe9243b757fbb,
-    type: 2}
+  nextEvolutionPrefab: {fileID: 0}
   FruitSprite: {fileID: 21300044, guid: 9c323ed9531a2184ca7c30bf22277034, type: 3}
   HungerSatisfied: 1
   HungerDecay: 0.01
@@ -121,7 +120,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 74
-  m_Sprite: {fileID: 21300038, guid: 9c323ed9531a2184ca7c30bf22277034, type: 3}
+  m_Sprite: {fileID: 21300040, guid: 9c323ed9531a2184ca7c30bf22277034, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

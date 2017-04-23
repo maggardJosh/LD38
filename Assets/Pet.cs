@@ -110,13 +110,13 @@ public class Pet : BaseEntity
     public float coinCount = 0;
     protected override void HandleFixedUpdate()
     {
-        if ((int)(HungerSatisfied * 10f) != (int)((HungerSatisfied - HungerDecay * Time.fixedUnscaledDeltaTime) * 10f))
+        if ((int)(HungerSatisfied * 10f) != (int)((HungerSatisfied - HungerDecay * Time.fixedDeltaTime) * 10f))
             GameManager.SpawnNeedMet(transform.position, FruitSprite, false);
-        HungerSatisfied -= HungerDecay * Time.fixedUnscaledDeltaTime;
+        HungerSatisfied -= HungerDecay * Time.fixedDeltaTime;
        
-        count += Time.fixedUnscaledDeltaTime;
-        lifeCount += Time.fixedUnscaledDeltaTime;
-        coinCount += Time.fixedUnscaledDeltaTime;
+        count += Time.fixedDeltaTime;
+        lifeCount += Time.fixedDeltaTime;
+        coinCount += Time.fixedDeltaTime;
         while(coinCount > SecondsPerCoin)
         {
             coinCount -= SecondsPerCoin;
