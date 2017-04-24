@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviour
         foreach (Text t in CoinText)
         {
             t.text = CoinCount.ToString();
-            t.transform.localScale = Vector3.one * 5;
+            t.transform.localScale = Vector3.one * 4;
         }
     }
 
@@ -106,7 +106,7 @@ public class GameManager : MonoBehaviour
         foreach (Text t in CoinText)
         {
             t.text = CoinCount.ToString();
-            t.transform.localScale = Vector3.one * 5;
+            t.transform.localScale = Vector3.one * 4;
         }
     }
 
@@ -186,7 +186,7 @@ public class GameManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        Screen.SetResolution(320, 568, false);
+        Screen.SetResolution(320, 480, false);
         SubtractGold(0);
     }
 
@@ -197,8 +197,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.U))
-            AddCoin(100);
+        //Check for being dead broke
+        if(Instance.CoinCount < 3 && FindObjectsOfType<Pet>().Length == 0)
+            AddCoin(3);
+        
         foreach (Text t in this.CoinText)
         {
             if (t.transform.localScale.x > 1)

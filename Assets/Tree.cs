@@ -38,7 +38,6 @@ public class Tree : BaseEntity
     }
     public override void CollideWithEntity(BaseEntity e)
     {
-        SoundManager.Play(GameManager.Instance.HitTree);
         Fruit fallingFruit = null;
         foreach (Fruit f in GrownFruit)
         {
