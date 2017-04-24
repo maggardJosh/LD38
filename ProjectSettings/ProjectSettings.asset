@@ -6,7 +6,7 @@ PlayerSettings:
   serializedVersion: 11
   productGUID: 3e209b81ab6339c4099ce6ef03a1b1e7
   AndroidProfiler: 0
-  defaultScreenOrientation: 4
+  defaultScreenOrientation: 0
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
@@ -135,7 +135,8 @@ PlayerSettings:
       depthFormat: 1
   protectGraphicsMemory: 0
   useHDRDisplay: 0
-  applicationIdentifier: {}
+  applicationIdentifier:
+    Android: com.rocketdad.pixlets
   buildNumber: {}
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 16
@@ -210,8 +211,8 @@ PlayerSettings:
   AndroidTargetDevice: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: 
-  AndroidKeyaliasName: 
+  AndroidKeystoreName: C:/Users/Josh/Dropbox/GameDev/LD38/user.keystore
+  AndroidKeyaliasName: release
   AndroidTVCompatibility: 1
   AndroidIsGame: 1
   androidEnableBanner: 1

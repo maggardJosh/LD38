@@ -93,23 +93,25 @@ public class GameManager : MonoBehaviour
     public void AddCoin(int coinAmount = 1)
     {
         CoinCount += coinAmount;
-        foreach (Text t in CoinText)
-        {
-            t.text = CoinCount.ToString();
-            t.transform.localScale = Vector3.one * 4;
-        }
+        RefreshCoinText();
+        PlayerPrefs.SetInt("Coins", CoinCount);
     }
 
     public void SubtractGold(int amount)
     {
         CoinCount -= amount;
+        RefreshCoinText();
+        PlayerPrefs.SetInt("Coins", CoinCount);
+    }
+
+    public void RefreshCoinText()
+    {
         foreach (Text t in CoinText)
         {
             t.text = CoinCount.ToString();
             t.transform.localScale = Vector3.one * 4;
         }
     }
-
     public static void SpawnNeedMet(Vector3 pos, Sprite s, bool positive = true)
     {
         GameObject needMet = Instantiate(Instance.NeedMetNotificationPrefab);
@@ -135,7 +137,7 @@ public class GameManager : MonoBehaviour
             return;
         Vector3 newPos = Camera.main.ScreenToWorldPoint(new Vector3(pos.x, pos.y, 0));
         newPos.z = 0;
-      
+
         Tree t = prefab.GetComponent<Tree>();
         if (t != null)
         {
@@ -180,6 +182,8 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
+
         instance = this;
 
     }
@@ -187,7 +191,10 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Screen.SetResolution(320, 480, false);
-        SubtractGold(0);
+        CoinCount = PlayerPrefs.GetInt("Coins", 0);
+
+        RefreshCoinText();
+
     }
 
     public LayerMask TreeMask;
@@ -198,9 +205,9 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         //Check for being dead broke
-        if(Instance.CoinCount < 3 && FindObjectsOfType<Pet>().Length == 0)
+        if (Instance.CoinCount < 3 && FindObjectsOfType<Pet>().Length == 0)
             AddCoin(3);
-        
+
         foreach (Text t in this.CoinText)
         {
             if (t.transform.localScale.x > 1)
@@ -220,14 +227,15 @@ public class GameManager : MonoBehaviour
                 case TouchPhase.Began:
                     if (fingerId == -1)
                     {
-                        RaycastHit result;
-                        if (Physics.Raycast(Camera.main.ScreenPointToRay(t.position), out result, 1000, TreeMask))
+                        foreach (Tree tr in Trees)
                         {
-                            Tree tree = result.collider.GetComponent<Tree>();
-                            if (tree != null)
+                            Vector3 worldPoint = Camera.main.ScreenToWorldPoint(t.position);
+                            worldPoint.z = 0;
+                            if ((tr.transform.position + Vector3.up * .2f - worldPoint).sqrMagnitude < .01f)
                             {
                                 fingerId = t.fingerId;
-                                currentTappingTree = tree;
+                                currentTappingTree = tr;
+                                break;
                             }
                         }
                     }
@@ -235,19 +243,20 @@ public class GameManager : MonoBehaviour
                 case TouchPhase.Ended:
                     if (fingerId == t.fingerId)
                     {
-                        RaycastHit result;
-                        if (Physics.Raycast(Camera.main.ScreenPointToRay(t.position), out result, 1000, TreeMask))
+                        Vector3 worldPoint = Camera.main.ScreenToWorldPoint(t.position);
+                        worldPoint.z = 0;
+                        if ((currentTappingTree.transform.position + Vector3.up * .2f - worldPoint).sqrMagnitude < .01f)
                         {
-                            Tree tree = result.collider.GetComponent<Tree>();
-                            if (tree != null && currentTappingTree == tree)
-                                Destroy(tree.gameObject);
-                        }
-                        else
-                        {
+
+                            Destroy(currentTappingTree.gameObject);
                             currentTappingTree = null;
                             fingerId = -1;
                         }
                     }
+                    break;
+                case TouchPhase.Canceled:
+                    fingerId = -1;
+                    currentTappingTree = null;
                     break;
             }
         }

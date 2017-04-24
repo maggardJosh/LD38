@@ -97,6 +97,13 @@ public class Pet : BaseEntity
             case State.EATING:
                 scaleValue = GameManager.Instance.PetEatCurve.Evaluate(animCount / GameManager.Instance.PetEatTime);
                 transform.localScale = new Vector3(1 + scaleValue, 1 - scaleValue, 1);
+                if (eatingFruit == null)
+                {
+                    CurrentState = State.IDLE;
+                    break;
+                }
+
+
                 eatingFruit.transform.localScale = transform.localScale;
                 if (animCount >= GameManager.Instance.PetEatTime * GameManager.Instance.PetEatLoop)
                 {
@@ -117,7 +124,7 @@ public class Pet : BaseEntity
                     newPet.transform.position = transform.position;
                     GameManager.SpawnNeedMet(transform.position, GameManager.Instance.EvolveNotification);
                     Pet p = newPet.GetComponent<Pet>();
-                    if(p!= null)
+                    if (p != null)
                     {
                         p.coinCount = p.SecondsPerCoin - 2f;
                     }
@@ -200,14 +207,14 @@ public class Pet : BaseEntity
     private const float ShowIndValue = 1.5f;
     protected override void HandleFixedUpdate()
     {
-      //  if ((int)(HungerSatisfied * ShowIndValue) != (int)((HungerSatisfied - HungerDecay * Time.fixedDeltaTime) * ShowIndValue))
-           
+        //  if ((int)(HungerSatisfied * ShowIndValue) != (int)((HungerSatisfied - HungerDecay * Time.fixedDeltaTime) * ShowIndValue))
+
         HungerSatisfied -= HungerDecay * Time.fixedDeltaTime;
 
         if (CurrentState != State.SLEEPING)
         {
-          //  if ((int)(SleepSatisfied * ShowIndValue) != (int)((SleepSatisfied - SleepDecay * Time.fixedDeltaTime) * ShowIndValue))
-                
+            //  if ((int)(SleepSatisfied * ShowIndValue) != (int)((SleepSatisfied - SleepDecay * Time.fixedDeltaTime) * ShowIndValue))
+
             SleepSatisfied -= SleepDecay * Time.fixedDeltaTime;
         }
 
@@ -311,7 +318,7 @@ public class Pet : BaseEntity
     int lastDeathCount = 0;
     private void Die()
     {
-        if(lastDeathCount != Mathf.FloorToInt(count))
+        if (lastDeathCount != Mathf.FloorToInt(count))
         {
             lastDeathCount = Mathf.FloorToInt(count);
 
