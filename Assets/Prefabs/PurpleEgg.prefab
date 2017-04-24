@@ -72,28 +72,30 @@ MonoBehaviour:
   InteractLayer:
     serializedVersion: 2
     m_Bits: 512
-  speed: 0.2
-  MoveChance: 0
-  EatChance: 0
-  SleepChance: 0
-  MinHungerBeforeEat: 0.7
-  MinTiredBeforeSleep: 0.7
-  WakeUpChance: 0.3
-  EmergencyEatValue: 0.3
-  EmergencySleepValue: 0.3
+  CurrentState: 0
+  lifeCount: 0
+  HungerSatisfied: 1
+  SleepSatisfied: 1
+  SecondsPerCoin: 30
+  EvolveTime: 20
   SleepDecay: 0
   HungerDecay: 0
-  SecondsPerCoin: 30
-  EvolveTime: 10
+  EatChance: 0
+  SleepChance: 0
+  MoveChance: 0
+  WakeUpChance: 0.3
+  speed: 0.2
+  MinHungerBeforeEat: 0.7
+  MinTiredBeforeSleep: 0.7
+  EmergencyEatValue: 0.3
+  EmergencySleepValue: 0.3
   MyPetType: 3
   normalSprite: {fileID: 21300018, guid: 9c323ed9531a2184ca7c30bf22277034, type: 3}
   sleepSprite: {fileID: 0}
   nextEvolutionPrefab: {fileID: 1559098286567768, guid: 00d08e1a9aca0be40a169ca38cfd3350,
     type: 2}
   FruitSprite: {fileID: 0}
-  CurrentState: 0
   DecisionTime: 0.1
-  StopMoveChance: 0.3
   coinCount: 0
   moveTarget: {x: 0, y: 0, z: 0}
   eatingFruit: {fileID: 0}

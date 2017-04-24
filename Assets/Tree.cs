@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -14,6 +15,7 @@ public class Tree : BaseEntity
     public float FruitDispHorizMax = .03f;
     public float FruitDispUpMin = .02f;
     public float FruitDispUpMax = .03f;
+    public int resellValue = 1;
 
     public Pet.PetType PetType = Pet.PetType.BLUE;
 
@@ -22,8 +24,21 @@ public class Tree : BaseEntity
         GameManager.AddObject(this, GameManager.Instance.Trees);
     }
 
+    void OnDestroy()
+    {
+        if (GameManager.Instance.Trees.Contains(this))
+            GameManager.Instance.Trees.Remove(this);
+        GameManager.Instance.AddCoin(resellValue);
+        GameManager.SpawnNeedMet(transform.position, GameManager.Instance.CoinSprite);
+        foreach (Fruit f in GrownFruit)
+            if (f.InTree)
+                Destroy(f.gameObject);
+        foreach (TreeHole h in GameManager.Instance.TreeHoles)
+            h.RefreshTree();
+    }
     public override void CollideWithEntity(BaseEntity e)
     {
+        SoundManager.Play(GameManager.Instance.HitTree);
         Fruit fallingFruit = null;
         foreach (Fruit f in GrownFruit)
         {
@@ -72,7 +87,7 @@ public class Tree : BaseEntity
         int positionTry = 0;
         while (!positioned)
         {
-            fruitObject.transform.position = transform.position + new Vector3(Random.Range(FruitDispHorizMin, FruitDispHorizMax), Random.Range(FruitDispUpMin, FruitDispUpMax), 0);
+            fruitObject.transform.position = transform.position + new Vector3(UnityEngine.Random.Range(FruitDispHorizMin, FruitDispHorizMax), UnityEngine.Random.Range(FruitDispUpMin, FruitDispUpMax), 0);
             positioned = true;
             foreach (Fruit fr in GrownFruit)
             {
@@ -88,5 +103,6 @@ public class Tree : BaseEntity
         GrownFruit.Add(f);
 
     }
+
 }
 

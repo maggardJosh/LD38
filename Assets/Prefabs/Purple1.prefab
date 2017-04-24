@@ -60,28 +60,31 @@ MonoBehaviour:
   InteractLayer:
     serializedVersion: 2
     m_Bits: 512
-  speed: 0.3
-  MoveChance: 0.1
-  EatChance: 0.2
-  SleepChance: 0.2
-  MinHungerBeforeEat: 0.5
-  MinTiredBeforeSleep: 0.7
-  WakeUpChance: 0.3
-  EmergencyEatValue: 0.3
-  EmergencySleepValue: 0.3
-  SleepDecay: 0.03
-  HungerDecay: 0.005
-  SecondsPerCoin: 30
-  EvolveTime: 60
+  CurrentState: 0
+  lifeCount: 0
+  HungerSatisfied: 1
+  SleepSatisfied: 1
+  SecondsPerCoin: 16
+  EvolveTime: 120
+  SleepDecay: 0.005
+  HungerDecay: 0.0015
+  EatChance: 0.5
+  SleepChance: 0.3
+  MoveChance: 0.5
+  WakeUpChance: 0.7
+  speed: 0.11
+  MinHungerBeforeEat: 0.9
+  MinTiredBeforeSleep: 0.65
+  EmergencyEatValue: 0.7
+  EmergencySleepValue: 0.5
   MyPetType: 3
   normalSprite: {fileID: 21300012, guid: 9c323ed9531a2184ca7c30bf22277034, type: 3}
   sleepSprite: {fileID: 21300074, guid: 9c323ed9531a2184ca7c30bf22277034, type: 3}
   nextEvolutionPrefab: {fileID: 1260576768678680, guid: 4742787c533ae454c96413c13a38df26,
     type: 2}
   FruitSprite: {fileID: 21300020, guid: 9c323ed9531a2184ca7c30bf22277034, type: 3}
-  CurrentState: 0
+  evolveAudio: {fileID: 0}
   DecisionTime: 0.1
-  StopMoveChance: 0.1
   coinCount: 0
   moveTarget: {x: 0, y: 0, z: 0}
   eatingFruit: {fileID: 0}
@@ -129,7 +132,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 91
-  m_Sprite: {fileID: 21300076, guid: 9c323ed9531a2184ca7c30bf22277034, type: 3}
+  m_Sprite: {fileID: 21300012, guid: 9c323ed9531a2184ca7c30bf22277034, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

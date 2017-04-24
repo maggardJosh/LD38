@@ -40,11 +40,18 @@ public class GameManager : MonoBehaviour
     public float EvolveTime = .3f;
     public int EvolveLoop = 5;
     public Sprite EvolveNotification;
+    public SoundGroup BirthSound;
+
+    public SoundGroup HitTree;
+    public SoundGroup Positive;
+    public SoundGroup Negative;
+    public SoundGroup Place;
 
     public AnimationCurve DieCurve;
     public float DieTime = .3f;
     public int DieLoop = 5;
     public Sprite DieNotification;
+    public SoundGroup DeathSound;
 
 
     public AnimationCurve SleepCurve;
@@ -66,6 +73,7 @@ public class GameManager : MonoBehaviour
 
     public BoxCollider2D playArea;
     public BoxCollider2D napArea;
+    public BoxCollider2D spawnArea;
 
 
     public GameObject NeedMetNotificationPrefab;
@@ -82,18 +90,24 @@ public class GameManager : MonoBehaviour
             list.Remove(obj);
     }
 
-    public void AddCoin()
+    public void AddCoin(int coinAmount = 1)
     {
-        CoinCount++;
+        CoinCount += coinAmount;
         foreach (Text t in CoinText)
+        {
             t.text = CoinCount.ToString();
+            t.transform.localScale = Vector3.one * 5;
+        }
     }
 
     public void SubtractGold(int amount)
     {
         CoinCount -= amount;
         foreach (Text t in CoinText)
+        {
             t.text = CoinCount.ToString();
+            t.transform.localScale = Vector3.one * 5;
+        }
     }
 
     public static void SpawnNeedMet(Vector3 pos, Sprite s, bool positive = true)
@@ -110,6 +124,8 @@ public class GameManager : MonoBehaviour
         if (needMetClass != null)
             needMetClass.SetSprite(positive ? Instance.PositiveNeed : Instance.NegativeNeed);
 
+        SoundManager.Play(positive ? Instance.Positive : Instance.Negative);
+
 
     }
 
@@ -119,6 +135,7 @@ public class GameManager : MonoBehaviour
             return;
         Vector3 newPos = Camera.main.ScreenToWorldPoint(new Vector3(pos.x, pos.y, 0));
         newPos.z = 0;
+      
         Tree t = prefab.GetComponent<Tree>();
         if (t != null)
         {
@@ -143,8 +160,18 @@ public class GameManager : MonoBehaviour
             else
                 return;
         }
+        else
+        {
+            if (!Instance.spawnArea.bounds.Contains(newPos))
+                return;
+        }
+
+        SoundManager.Play(instance.Place);
         Instance.SubtractGold(goldCost);
         GameObject newItem = Instantiate(prefab);
+        Tree tComp = newItem.GetComponent<Tree>();
+        if (tComp != null)
+            tComp.resellValue = goldCost;
         newItem.transform.position = newPos;
         SpawnNeedMet(newItem.transform.position, Instance.CoinSprite, false);
 
@@ -159,12 +186,105 @@ public class GameManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        Screen.SetResolution(320, 568, false);
         SubtractGold(0);
     }
 
-    public LayerMask StoreMask;
+    public LayerMask TreeMask;
+    public Tree currentTappingTree;
+    private int fingerId = -1;
+
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.U))
+            AddCoin(100);
+        foreach (Text t in this.CoinText)
+        {
+            if (t.transform.localScale.x > 1)
+            {
+                t.transform.localScale = t.transform.localScale * .95f;
+            }
+            else
+            {
+                t.transform.localScale = Vector3.one;
+            }
+        }
+        Vector2 touchPos = Input.mousePosition;
+        foreach (Touch t in Input.touches)
+        {
+            switch (t.phase)
+            {
+                case TouchPhase.Began:
+                    if (fingerId == -1)
+                    {
+                        RaycastHit result;
+                        if (Physics.Raycast(Camera.main.ScreenPointToRay(t.position), out result, 1000, TreeMask))
+                        {
+                            Tree tree = result.collider.GetComponent<Tree>();
+                            if (tree != null)
+                            {
+                                fingerId = t.fingerId;
+                                currentTappingTree = tree;
+                            }
+                        }
+                    }
+                    break;
+                case TouchPhase.Ended:
+                    if (fingerId == t.fingerId)
+                    {
+                        RaycastHit result;
+                        if (Physics.Raycast(Camera.main.ScreenPointToRay(t.position), out result, 1000, TreeMask))
+                        {
+                            Tree tree = result.collider.GetComponent<Tree>();
+                            if (tree != null && currentTappingTree == tree)
+                                Destroy(tree.gameObject);
+                        }
+                        else
+                        {
+                            currentTappingTree = null;
+                            fingerId = -1;
+                        }
+                    }
+                    break;
+            }
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (fingerId == -1)
+            {
+                foreach (Tree t in Trees)
+                {
+                    Vector3 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    worldPoint.z = 0;
+                    if ((t.transform.position + Vector3.up * .2f - worldPoint).sqrMagnitude < .01f)
+                    {
+                        fingerId = 0;
+                        currentTappingTree = t;
+                        break;
+                    }
+                }
+
+            }
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            if (fingerId == 0)
+            {
+                Vector3 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                worldPoint.z = 0;
+                if ((currentTappingTree.transform.position + Vector3.up * .2f - worldPoint).sqrMagnitude < .01f)
+                {
+
+                    Destroy(currentTappingTree.gameObject);
+                    currentTappingTree = null;
+                    fingerId = -1;
+                }
+            }
+        }
+
     }
+
+
 }

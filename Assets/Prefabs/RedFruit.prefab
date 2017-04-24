@@ -143,9 +143,9 @@ MonoBehaviour:
   yDisp: 0
   PetType: 1
   sRenderer: {fileID: 0}
-  HungerValue: 0.5
+  HungerValue: 0.55
   IsAvailable: 0
-  DecayTime: 5
+  DecayTime: 7
 --- !u!114 &114451195338491024
 MonoBehaviour:
   m_ObjectHideFlags: 1

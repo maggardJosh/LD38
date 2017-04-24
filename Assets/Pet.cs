@@ -12,26 +12,24 @@ public class Pet : BaseEntity
     public float SleepSatisfied = 1f;
 
     [Header("Stats Settings")]
-    public float speed = 1.0f;
-    public float MoveChance = .7f;
-
-
+    public float SecondsPerCoin = 5f;
+    public float EvolveTime = 10f;
+    [Space(10)]
+    public float SleepDecay = .1f;
+    public float HungerDecay = .1f;
+    [Space(10)]
     public float EatChance = .2f;
     public float SleepChance = .2f;
 
+    public float MoveChance = .7f;
+    public float WakeUpChance = .3f;
+    public float speed = 1.0f;
+    [Space(10)]
     public float MinHungerBeforeEat = .7f;
     public float MinTiredBeforeSleep = .7f;
 
-    public float WakeUpChance = .3f;
-
     public float EmergencyEatValue = .3f;
     public float EmergencySleepValue = .3f;
-
-    public float SleepDecay = .1f;
-    public float HungerDecay = .1f;
-
-    public float SecondsPerCoin = 5f;
-    public float EvolveTime = 10f;
 
     [Header("Settings")]
     public PetType MyPetType = PetType.BLUE;
@@ -40,8 +38,9 @@ public class Pet : BaseEntity
 
     public GameObject nextEvolutionPrefab;
     public Sprite FruitSprite;
+    public AudioSource evolveAudio;
 
-    
+
     public enum PetType
     {
         BLUE,
@@ -71,7 +70,7 @@ public class Pet : BaseEntity
         sRenderer = GetComponent<SpriteRenderer>();
     }
     [Header("Misc")]
-   
+
     private float count = 0;
 
     private float animCount = 0;
@@ -111,12 +110,18 @@ public class Pet : BaseEntity
                 break;
             case State.EVOLVING:
                 scaleValue = GameManager.Instance.EvolveCurve.Evaluate(animCount / GameManager.Instance.EvolveTime);
-                transform.localScale = new Vector3(1 + scaleValue, 1 - scaleValue, 1);
+                transform.localScale = new Vector3(1 + scaleValue, 1 + scaleValue * .5f, 1);
                 if (animCount >= GameManager.Instance.EvolveTime * GameManager.Instance.EvolveLoop)
                 {
                     GameObject newPet = Instantiate(nextEvolutionPrefab);
                     newPet.transform.position = transform.position;
                     GameManager.SpawnNeedMet(transform.position, GameManager.Instance.EvolveNotification);
+                    Pet p = newPet.GetComponent<Pet>();
+                    if(p!= null)
+                    {
+                        p.coinCount = p.SecondsPerCoin - 2f;
+                    }
+                    SoundManager.Play(GameManager.Instance.BirthSound);
                     Destroy(gameObject);
                 }
                 break;
@@ -125,6 +130,7 @@ public class Pet : BaseEntity
                 transform.localScale = new Vector3(1 - scaleValue, 1 + scaleValue, 1);
                 if (animCount >= GameManager.Instance.DieTime * GameManager.Instance.DieLoop)
                 {
+                    SoundManager.Play(GameManager.Instance.DeathSound);
                     GameManager.SpawnNeedMet(transform.position, GameManager.Instance.DieNotification, false);
                     Destroy(gameObject);
                 }
@@ -186,21 +192,22 @@ public class Pet : BaseEntity
     }
 
     public float DecisionTime = .3f;
-    
+
     public float coinCount = 0;
     public Vector3 moveTarget;
     private float moveToSleepCount = 0;
     private const float MAX_MOVE_TO_SLEEP_TIME = 3.0f;
+    private const float ShowIndValue = 1.5f;
     protected override void HandleFixedUpdate()
     {
-        if ((int)(HungerSatisfied * 5f) != (int)((HungerSatisfied - HungerDecay * Time.fixedDeltaTime) * 5f))
-            GameManager.SpawnNeedMet(transform.position, FruitSprite, false);
+      //  if ((int)(HungerSatisfied * ShowIndValue) != (int)((HungerSatisfied - HungerDecay * Time.fixedDeltaTime) * ShowIndValue))
+           
         HungerSatisfied -= HungerDecay * Time.fixedDeltaTime;
 
         if (CurrentState != State.SLEEPING)
         {
-            if ((int)(SleepSatisfied * 5f) != (int)((SleepSatisfied - SleepDecay * Time.fixedDeltaTime) * 5f))
-                GameManager.SpawnNeedMet(transform.position, GameManager.Instance.SleepNotification, false);
+          //  if ((int)(SleepSatisfied * ShowIndValue) != (int)((SleepSatisfied - SleepDecay * Time.fixedDeltaTime) * ShowIndValue))
+                
             SleepSatisfied -= SleepDecay * Time.fixedDeltaTime;
         }
 
@@ -215,10 +222,12 @@ public class Pet : BaseEntity
         }
         if (count >= DecisionTime)
         {
+            if (CheckDeath())
+                return;
             switch (CurrentState)
             {
                 case State.IDLE:
-                    if (!CheckDeath() && !CheckEvolve() && !CheckHunger() && !CheckSleep())
+                    if (!CheckEvolve() && !CheckHunger() && !CheckSleep())
                         if (Random.Range(0, 1f) <= MoveChance)
                         {
                             CurrentState = State.MOVING;
@@ -247,7 +256,7 @@ public class Pet : BaseEntity
                     }
                     else
                     {
-                        if(moveToSleepCount > MAX_MOVE_TO_SLEEP_TIME)
+                        if (moveToSleepCount > MAX_MOVE_TO_SLEEP_TIME)
                         {
                             RethinkSleep();
                         }
@@ -264,7 +273,7 @@ public class Pet : BaseEntity
                     }
                     else if (eatingFruit.InTree)
                     {
-                        MoveDir = Vector3.RotateTowards(MoveDir, (new Vector3(eatingFruit.treeParent.bCollider.offset.x, eatingFruit.treeParent.bCollider.offset.y) + eatingFruit.treeParent.transform.position -transform.position).normalized * speed, .5f, 1f);
+                        MoveDir = Vector3.RotateTowards(MoveDir, (new Vector3(eatingFruit.treeParent.bCollider.offset.x, eatingFruit.treeParent.bCollider.offset.y) + eatingFruit.treeParent.transform.position - transform.position).normalized * speed, .5f, 1f);
                     }
                     else
                         RethinkFruit();
@@ -276,7 +285,7 @@ public class Pet : BaseEntity
         base.HandleFixedUpdate();
     }
 
-    
+
     private bool CheckEvolve()
     {
         if (nextEvolutionPrefab != null & lifeCount > EvolveTime)
@@ -290,6 +299,8 @@ public class Pet : BaseEntity
 
     private bool CheckDeath()
     {
+        if (CurrentState == State.EATING)
+            return false;
         if (HungerSatisfied <= 0 || SleepSatisfied <= 0)
         {
             Die();
@@ -297,11 +308,23 @@ public class Pet : BaseEntity
         }
         return false;
     }
+    int lastDeathCount = 0;
     private void Die()
     {
+        if(lastDeathCount != Mathf.FloorToInt(count))
+        {
+            lastDeathCount = Mathf.FloorToInt(count);
+
+            if (HungerSatisfied <= 0)
+                GameManager.SpawnNeedMet(transform.position, FruitSprite, false);
+            else if (SleepSatisfied <= 0)
+                GameManager.SpawnNeedMet(transform.position, GameManager.Instance.SleepNotification, false);
+        }
+
         if (CurrentState == State.DYING)
             return;
         CurrentState = State.DYING;
+        MoveDir = Vector2.zero;
         animCount = 0;
     }
     private void RethinkSleep()
@@ -328,6 +351,7 @@ public class Pet : BaseEntity
     {
         if ((SleepSatisfied < MinTiredBeforeSleep && Random.Range(0, 1f) < SleepChance) || SleepSatisfied < EmergencySleepValue)
         {
+            GameManager.SpawnNeedMet(transform.position, GameManager.Instance.SleepNotification, false);
             RethinkSleep();
             return true;
         }
@@ -338,7 +362,8 @@ public class Pet : BaseEntity
     {
         if ((HungerSatisfied < MinHungerBeforeEat && Random.Range(0, 1f) < EatChance) || HungerSatisfied < EmergencyEatValue)
         {
-            RethinkFruit();
+            GameManager.SpawnNeedMet(transform.position, FruitSprite, false);
+            return RethinkFruit();
         }
 
         return false;
@@ -347,7 +372,7 @@ public class Pet : BaseEntity
     public Fruit eatingFruit = null;
     public void TryEat(Fruit f)
     {
-        if (f.PetType == MyPetType && HungerSatisfied <= MinHungerBeforeEat && CurrentState != State.EVOLVING)
+        if (f.PetType == MyPetType && HungerSatisfied <= MinHungerBeforeEat && CurrentState == State.MOVING_TO_FOOD)
         {
             eatingFruit = f;
             f.IsAvailable = false;

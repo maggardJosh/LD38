@@ -101,12 +101,13 @@ MonoBehaviour:
   FruitPrefab: {fileID: 1589804227723442, guid: c8b03e0d6f1514e4f899e8003945caff,
     type: 2}
   GrownFruit: []
-  maxFruit: 3
+  maxFruit: 4
   FruitGrowTime: 2
   FruitDispHorizMin: -0.05
   FruitDispHorizMax: 0.08
   FruitDispUpMin: 0.12
   FruitDispUpMax: 0.285
+  resellValue: 1
   PetType: 3
 --- !u!212 &212627716600378770
 SpriteRenderer:

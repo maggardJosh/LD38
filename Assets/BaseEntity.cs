@@ -38,6 +38,7 @@ public class BaseEntity : MonoBehaviour
 
     private void TryMove()
     {
+        MoveDir.z = 0;
         RaycastHit2D wallHit = Physics2D.Raycast(transform.position, MoveDir, Time.deltaTime, ImpassableLayer);
         if (wallHit.collider != null)
         {

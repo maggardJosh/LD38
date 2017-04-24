@@ -10,6 +10,7 @@ public class MusicFadeIn : MonoBehaviour {
 	void Start () {
         aSource = GetComponent<AudioSource>();
         aSource.mute = PlayerPrefs.GetInt("MutePref", 0) == 1;
+        SoundManager.instance.SFXVolume = aSource.mute ? 0 : 1;
 
     }
 	
@@ -25,5 +26,6 @@ public class MusicFadeIn : MonoBehaviour {
     {
         //aSource.mute = true;
         aSource.mute = value;
+        SoundManager.instance.SFXVolume = aSource.mute ? 0 : 1;
     }
 }

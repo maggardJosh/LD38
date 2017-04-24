@@ -7,6 +7,7 @@ public class MenuArranger : MonoBehaviour
 {
 
     public float iconWidth = 70;
+    public float margins = 20f;
 
     // Use this for initialization
     void Start()
@@ -24,9 +25,9 @@ public class MenuArranger : MonoBehaviour
             if (!t.gameObject.activeSelf)
                 continue;
             t.sizeDelta = new Vector2(iconWidth, 100);
-            t.anchoredPosition = new Vector2(iconWidth * ind, 0);
+            t.anchoredPosition = new Vector2(margins + iconWidth * ind, 0);
             ind++;
         }
-        ((RectTransform)transform).sizeDelta = new Vector2((ind+.5f) * iconWidth, 100);
+        ((RectTransform)transform).sizeDelta = new Vector2(ind * iconWidth + margins*2f, 100);
     }
 }

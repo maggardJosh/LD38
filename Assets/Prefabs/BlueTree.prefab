@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 212627716600378770}
   - component: {fileID: 114714142588841662}
   - component: {fileID: 61674613657844954}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: BlueTree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,12 +101,13 @@ MonoBehaviour:
   FruitPrefab: {fileID: 1589804227723442, guid: 6c7befefeb07e5a4891cfa0f81da11d8,
     type: 2}
   GrownFruit: []
-  maxFruit: 3
-  FruitGrowTime: 2
+  maxFruit: 4
+  FruitGrowTime: 10
   FruitDispHorizMin: -0.05
   FruitDispHorizMax: 0.08
   FruitDispUpMin: 0.12
   FruitDispUpMax: 0.285
+  resellValue: 1
   PetType: 0
 --- !u!212 &212627716600378770
 SpriteRenderer:

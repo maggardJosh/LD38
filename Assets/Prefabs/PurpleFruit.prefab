@@ -89,7 +89,7 @@ MonoBehaviour:
   InTree: 1
   treeParent: {fileID: 0}
   IsGrown: 0
-  GrowTime: 6
+  GrowTime: 5
   GrowCurve:
     serializedVersion: 2
     m_Curve:
@@ -143,9 +143,9 @@ MonoBehaviour:
   yDisp: 0
   PetType: 3
   sRenderer: {fileID: 0}
-  HungerValue: 0.5
+  HungerValue: 0.75
   IsAvailable: 0
-  DecayTime: 5
+  DecayTime: 7
 --- !u!114 &114451195338491024
 MonoBehaviour:
   m_ObjectHideFlags: 1

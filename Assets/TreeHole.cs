@@ -13,6 +13,13 @@ public class TreeHole : MonoBehaviour {
                 currentTree = t;
     }
 	
+    public void RefreshTree()
+    {
+        currentTree = null;
+        foreach (Tree t in GameManager.Instance.Trees)
+            if ((t.transform.position - transform.position).sqrMagnitude < .01f)
+                currentTree = t;
+    }
 	// Update is called once per frame
 	void Update () {
 		
