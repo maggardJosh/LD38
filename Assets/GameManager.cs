@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -14,7 +15,11 @@ public class GameManager : MonoBehaviour
         get
         {
             if (instance == null)
-                throw new System.Exception("Need GameManager Instance in Scene");
+            {
+                instance = FindObjectOfType<GameManager>();
+                if (instance == null)
+                    throw new System.Exception("Need GameManager Instance in Scene");
+            }
             return instance;
         }
     }
@@ -75,6 +80,7 @@ public class GameManager : MonoBehaviour
     public BoxCollider2D napArea;
     public BoxCollider2D spawnArea;
 
+    public GameObject UIContainer;
 
     public GameObject NeedMetNotificationPrefab;
 
@@ -102,6 +108,7 @@ public class GameManager : MonoBehaviour
         CoinCount -= amount;
         RefreshCoinText();
         PlayerPrefs.SetInt("Coins", CoinCount);
+        SaveUIState();
     }
 
     public void RefreshCoinText()
@@ -112,6 +119,38 @@ public class GameManager : MonoBehaviour
             t.transform.localScale = Vector3.one * 4;
         }
     }
+
+    public void ResetScene()
+    {
+        PlayerPrefs.SetInt("Coins", 0);
+        ResetUIState();
+
+        Scene scene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(scene.name);
+    }
+
+    public void SaveUIState()
+    {
+        foreach (Transform t in UIContainer.transform)
+            PlayerPrefs.SetInt(t.gameObject.name, t.gameObject.activeSelf ? 1 : 0);
+
+    }
+
+    public void LoadUIState()
+    {
+        foreach (Transform t in UIContainer.transform)
+            t.gameObject.SetActive(PlayerPrefs.GetInt(t.gameObject.name, defaultUIObjects.Contains(t.gameObject.name) ? 1 : 0) == 1);
+    }
+
+    List<string> defaultUIObjects = new List<string>() { "OrangeEgg", "OrangeTree", "UnlockPurple" };
+    public void ResetUIState()
+    {
+        foreach (Transform t in UIContainer.transform)
+            PlayerPrefs.SetInt(t.gameObject.name, defaultUIObjects.Contains(t.gameObject.name) ? 1 : 0);
+    }
+
+
+
     public static void SpawnNeedMet(Vector3 pos, Sprite s, bool positive = true)
     {
         GameObject needMet = Instantiate(Instance.NeedMetNotificationPrefab);
@@ -192,6 +231,8 @@ public class GameManager : MonoBehaviour
     {
         Screen.SetResolution(320, 480, false);
         CoinCount = PlayerPrefs.GetInt("Coins", 0);
+        LoadUIState();
+
 
         RefreshCoinText();
 
@@ -204,9 +245,17 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Android back button code
+        if (Input.GetKey(KeyCode.Escape))
+            Application.Quit();
         //Check for being dead broke
         if (Instance.CoinCount < 3 && FindObjectsOfType<Pet>().Length == 0)
-            AddCoin(3);
+        {
+            if (FindObjectsOfType<Tree>().Length == 0)
+                AddCoin(12 + 3);
+            else
+                AddCoin(3);
+        }
 
         foreach (Text t in this.CoinText)
         {
@@ -249,6 +298,9 @@ public class GameManager : MonoBehaviour
                         {
 
                             Destroy(currentTappingTree.gameObject);
+
+                            AddCoin(currentTappingTree.resellValue);
+                            SpawnNeedMet(currentTappingTree.transform.position, CoinSprite);
                             currentTappingTree = null;
                             fingerId = -1;
                         }
@@ -289,6 +341,9 @@ public class GameManager : MonoBehaviour
                 {
 
                     Destroy(currentTappingTree.gameObject);
+
+                    AddCoin(currentTappingTree.resellValue);
+                    SpawnNeedMet(currentTappingTree.transform.position, CoinSprite);
                     currentTappingTree = null;
                     fingerId = -1;
                 }

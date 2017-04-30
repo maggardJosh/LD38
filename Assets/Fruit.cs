@@ -33,11 +33,16 @@ public class Fruit : BaseEntity
     {
         sRenderer = GetComponent<SpriteRenderer>();
         GameManager.AddObject(this, GameManager.Instance.Fruits);
+        
     }
 
     void OnDestroy()
     {
-        GameManager.RemoveObject(this, GameManager.Instance.Fruits);
+        try
+        {
+            GameManager.RemoveObject(this, GameManager.Instance.Fruits);
+        }
+        catch { }
     }
 
     public override void CollideWithEntity(BaseEntity e)
@@ -45,7 +50,7 @@ public class Fruit : BaseEntity
         if (!IsAvailable)
             return;
         Pet p = e.GetComponent<Pet>();
-        if(p != null)
+        if (p != null)
         {
             p.TryEat(this);
         }
@@ -81,10 +86,10 @@ public class Fruit : BaseEntity
                 count = 0;
             }
         }
-        if(IsAvailable)
+        if (IsAvailable)
         {
             count += Time.deltaTime;
-            if(count > DecayTime)
+            if (count > DecayTime)
             {
                 Destroy(gameObject);
             }

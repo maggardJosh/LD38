@@ -26,15 +26,20 @@ public class Tree : BaseEntity
 
     void OnDestroy()
     {
-        if (GameManager.Instance.Trees.Contains(this))
-            GameManager.Instance.Trees.Remove(this);
-        GameManager.Instance.AddCoin(resellValue);
-        GameManager.SpawnNeedMet(transform.position, GameManager.Instance.CoinSprite);
-        foreach (Fruit f in GrownFruit)
-            if (f.InTree)
-                Destroy(f.gameObject);
-        foreach (TreeHole h in GameManager.Instance.TreeHoles)
-            h.RefreshTree();
+        try
+        {
+
+            if (GameManager.Instance.Trees.Contains(this))
+                GameManager.Instance.Trees.Remove(this);
+            foreach (Fruit f in GrownFruit)
+                if (f.InTree)
+                    Destroy(f.gameObject);
+            foreach (TreeHole h in GameManager.Instance.TreeHoles)
+                h.RefreshTree();
+        }catch(Exception)
+        {
+
+        }
     }
     public override void CollideWithEntity(BaseEntity e)
     {

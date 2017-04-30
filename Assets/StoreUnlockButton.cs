@@ -35,10 +35,10 @@ public class StoreUnlockButton : MonoBehaviour, IPointerClickHandler
             return;
         if (GameManager.Instance.CoinCount >= GoldCost)
         {
-            GameManager.Instance.SubtractGold(GoldCost);
             foreach (GameObject o in itemsToEnable)
                 o.SetActive(true);
             gameObject.SetActive(false);
+            GameManager.Instance.SubtractGold(GoldCost);
         }
     }
 }
