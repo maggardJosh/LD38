@@ -211,7 +211,7 @@ PlayerSettings:
   AndroidTargetDevice: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: C:/Users/Josh/Dropbox/GameDev/LD38/user.keystore
+  AndroidKeystoreName: C:/Users/Jif/Dropbox/GameDev/LD38/user.keystore
   AndroidKeyaliasName: release
   AndroidTVCompatibility: 1
   AndroidIsGame: 1
